@@ -17,6 +17,7 @@ return {
         "vim",
         "python",
         "yaml",
+        "asm",
       },
     },
   },
