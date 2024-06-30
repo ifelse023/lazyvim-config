@@ -4,9 +4,17 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        asm_lsp = {
-          cmd = { "/home/wasd/.cargo/bin/asm-lsp" }, -- Specify the path to the language server executable
-        },
+        asm_lsp = {},
+      },
+    },
+  },
+
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "asm-lsp",
+        "asmfmt",
       },
     },
   },
