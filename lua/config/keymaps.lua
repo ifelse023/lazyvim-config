@@ -4,3 +4,4 @@
 --
 
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>")
+vim.keymap.set("n", "<C-s>", "<cmd>vsplit<cr>")
