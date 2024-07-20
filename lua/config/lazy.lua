@@ -20,8 +20,9 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
     { import = "plugins" },
-    { "williamboman/mason-lspconfig.nvim", enabled = false },
-    { "williamboman/mason.nvim", enabled = false },
+    -- { "windwp/nvim-ts-autotag", enabled = false },
+    -- { "williamboman/mason-lspconfig.nvim", enabled = false },
+    -- { "williamboman/mason.nvim", enabled = false },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
