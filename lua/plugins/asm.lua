@@ -1,13 +1,13 @@
 return {
 
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        asm_lsp = {},
-      },
-    },
-  },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     servers = {
+  --       asm_lsp = {},
+  --     },
+  --   },
+  -- },
 
   {
     "stevearc/conform.nvim",
