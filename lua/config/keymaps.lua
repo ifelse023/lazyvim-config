@@ -4,3 +4,11 @@
 --
 
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>")
+
+vim.keymap.set("n", "<leader>cx", function()
+  require("cmp").setup.buffer({ enabled = false })
+end, { desc = "Disable buffer completion" })
+
+vim.keymap.set("n", "<leader>cz", function()
+  require("cmp").setup.buffer({ enabled = true })
+end, { desc = "Disable buffer completion" })
