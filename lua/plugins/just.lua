@@ -1,6 +1,10 @@
 return {
 
-  { "NoahTheDuke/vim-just" },
+  {
+    "NoahTheDuke/vim-just",
+    ft = { "just" },
+    lazy = true,
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
