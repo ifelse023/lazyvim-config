@@ -3,6 +3,7 @@
 -- Add any additional autocmds here
 --
 
+vim.api.nvim_command("command! ChezmoiFzf lua fzf_chezmoi()")
 vim.api.nvim_create_autocmd("InsertEnter", {
   pattern = "*",
   command = "norm zz",

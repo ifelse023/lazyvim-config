@@ -12,7 +12,10 @@ end, { desc = "Disable buffer completion" })
 
 vim.keymap.set("n", "<leader>cz", function()
   require("cmp").setup.buffer({ enabled = true })
-end, { desc = "Disable buffer completion" })
+end, { desc = "Enable buffer completion" })
+
+-- Recenter the screen on the current line using 'zz'
+vim.keymap.set("n", "<leader>z", "zz", { desc = "Recenter screen" })
 
 if vim.g.neovide then
   vim.keymap.set("n", "<C-s>", ":w<CR>") -- Save
