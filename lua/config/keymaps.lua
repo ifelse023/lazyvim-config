@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 --
 
-vim.keymap.set("n", "<S-Tab>", "<cmd>wincmd w<cr>") -- Switch to the next window
+vim.keymap.set("n", "<S-CR>", "<cmd>wincmd w<cr>") -- Switch to the next window
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>")
 
 vim.keymap.set("n", "<leader>cx", function()
