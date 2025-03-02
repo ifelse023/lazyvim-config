@@ -16,7 +16,7 @@ return {
       completion_toggle:toggle()
     end
 
-    vim.keymap.set({ "i", "n" }, "<C-0>", toggle_completion, { desc = "Toggle Completion" })
+    vim.keymap.set({ "i", "n" }, "<C-9>", toggle_completion, { desc = "Toggle Completion" })
     opts.enabled = function()
       return vim.b.completion
     end
