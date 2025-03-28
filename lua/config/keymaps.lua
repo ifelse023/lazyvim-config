@@ -37,3 +37,26 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down and center" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up and center" })
 vim.keymap.set("n", "<C-j>", "10jzz", { desc = "Jump down 10 lines and center" })
 vim.keymap.set("n", "<C-k>", "10kzz", { desc = "Jump up 10 lines and center" })
+
+local dap = require("dap")
+
+vim.keymap.set("n", "<F10>", function()
+  dap.step_over()
+end, { desc = "Debug: Step Over" })
+
+vim.keymap.set("n", "<F11>", function()
+  dap.step_into()
+end, { desc = "Debug: Step Into" })
+
+vim.keymap.set("n", "<F12>", function()
+  dap.step_out()
+end, { desc = "Debug: Step Out" })
+
+vim.keymap.set("n", "<F9>", function()
+  dap.toggle_breakpoint()
+end, { desc = "Debug: Toggle Breakpoint" })
+
+if vim.g.neovide then
+  vim.keymap.set({ "n", "x", "i" }, "<C-S-C>", '"+y', { desc = "Copy system clipboard" })
+  vim.keymap.set({ "n", "x", "i" }, "<C-S-V>", '"+p', { desc = "Paste system clipboard" })
+end
