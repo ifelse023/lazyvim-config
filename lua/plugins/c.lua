@@ -21,6 +21,7 @@ return {
 
   {
     "p00f/clangd_extensions.nvim",
+
     lazy = true,
     config = function() end,
     opts = {
@@ -55,7 +56,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Ensure mason installs the server
         clangd = {
           keys = {
             { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
@@ -115,45 +115,56 @@ return {
   {
     "mfussenegger/nvim-dap",
     optional = true,
-    dependencies = {
-      -- Ensure C/C++ debugger is installed
-      "williamboman/mason.nvim",
-      optional = true,
-      opts = { ensure_installed = { "codelldb" } },
-    },
     opts = function()
       local dap = require("dap")
-      if not dap.adapters["codelldb"] then
-        require("dap").adapters["codelldb"] = {
-          type = "server",
-          host = "localhost",
-          port = "${port}",
-          executable = {
-            command = "codelldb",
-            args = {
-              "--port",
-              "${port}",
-            },
+      if not dap.adapters["cppdbg"] then
+        require("dap").adapters["cppdbg"] = {
+          id = "cppdbg",
+          type = "executable",
+          command = "/usr/share/cpptools-debug/bin/OpenDebugAD7",
+          options = {
+            detached = false,
           },
         }
       end
+
       for _, lang in ipairs({ "c", "cpp" }) do
         dap.configurations[lang] = {
           {
-            type = "codelldb",
-            request = "launch",
             name = "Launch file",
+            type = "cppdbg",
+            request = "launch",
             program = function()
               return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/build/main", "file")
             end,
             cwd = "${workspaceFolder}",
+            stopAtEntry = true,
+            setupCommands = {
+              {
+                text = "-enable-pretty-printing",
+                description = "enable pretty printing",
+                ignoreFailures = true,
+              },
+            },
           },
           {
-            type = "codelldb",
-            request = "attach",
-            name = "Attach to process",
-            pid = require("dap.utils").pick_process,
+            name = "Attach to gdbserver :1234",
+            type = "cppdbg",
+            request = "launch",
+            MIMode = "gdb",
+            miDebuggerServerAddress = "localhost:1234",
+            miDebuggerPath = "/usr/bin/gdb",
             cwd = "${workspaceFolder}",
+            program = function()
+              return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/build/main", "file")
+            end,
+            setupCommands = {
+              {
+                text = "-enable-pretty-printing",
+                description = "enable pretty printing",
+                ignoreFailures = true,
+              },
+            },
           },
         }
       end
