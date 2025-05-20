@@ -121,7 +121,7 @@ return {
         require("dap").adapters["cppdbg"] = {
           id = "cppdbg",
           type = "executable",
-          command = "/usr/share/cpptools-debug/bin/OpenDebugAD7",
+          command = "OpenDebugAD7",
           options = {
             detached = false,
           },
