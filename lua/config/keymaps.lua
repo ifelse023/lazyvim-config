@@ -38,6 +38,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up and center" })
 vim.keymap.set("n", "<C-j>", "10jzz", { desc = "Jump down 10 lines and center" })
 vim.keymap.set("n", "<C-k>", "10kzz", { desc = "Jump up 10 lines and center" })
 
+vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+
 local dap = require("dap")
 
 vim.keymap.set("n", "<F10>", function()
@@ -56,7 +58,15 @@ vim.keymap.set("n", "<F9>", function()
   dap.toggle_breakpoint()
 end, { desc = "Debug: Toggle Breakpoint" })
 
-if vim.g.neovide then
-  vim.keymap.set({ "n", "x", "i" }, "<C-S-C>", '"+y', { desc = "Copy system clipboard" })
-  vim.keymap.set({ "n", "x", "i" }, "<C-S-V>", '"+p', { desc = "Paste system clipboard" })
-end
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+vim.keymap.set("v", "<C-c>", '"+y')
+vim.keymap.set("n", "<C-v>", '"+P')
+vim.keymap.set("v", "<C-v>", '"+P')
+vim.keymap.set("c", "<C-v>", "<C-R>+")
+vim.keymap.set("i", "<C-v>", '<ESC>l"+Pli')
+
+-- Terminal, command-line and general paste mappings
+vim.api.nvim_set_keymap("", "<C-v>", '"+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("!", "<C-v>", "<C-R>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-v>", "<C-R>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<C-v>", "<C-R>+", { noremap = true, silent = true })
