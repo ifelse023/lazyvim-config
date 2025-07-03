@@ -77,7 +77,7 @@ return {
             offsetEncoding = { "utf-16" },
           },
           cmd = {
-            "clangd",
+            "/usr/bin/clangd",
             "--background-index",
             "--clang-tidy",
             "--header-insertion=iwyu",

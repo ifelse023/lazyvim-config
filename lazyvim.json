@@ -10,7 +10,11 @@
     "lazyvim.plugins.extras.editor.mini-move",
     "lazyvim.plugins.extras.editor.snacks_explorer",
     "lazyvim.plugins.extras.editor.snacks_picker",
+    "lazyvim.plugins.extras.lang.cmake",
+    "lazyvim.plugins.extras.lang.json",
+    "lazyvim.plugins.extras.lang.toml",
     "lazyvim.plugins.extras.ui.treesitter-context",
+    "lazyvim.plugins.extras.util.chezmoi",
     "lazyvim.plugins.extras.util.dot"
   ],
   "install_version": 7,
