@@ -51,7 +51,6 @@ return {
     },
   },
 
-  -- Correctly setup lspconfig for clangd 🚀
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -62,6 +61,7 @@ return {
           },
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern(
+              "pico_sdk_import.cmake",
               "Makefile",
               "configure.ac",
               "configure.in",
@@ -76,15 +76,22 @@ return {
           capabilities = {
             offsetEncoding = { "utf-16" },
           },
-          cmd = {
-            "/usr/bin/clangd",
-            "--background-index",
-            "--clang-tidy",
-            "--header-insertion=iwyu",
-            "--completion-style=detailed",
-            "--function-arg-placeholders",
-            "--fallback-style=llvm",
-          },
+          cmd = (function()
+            local is_cross_compiling = vim.fn.glob("**/pico_sdk_import.cmake") ~= ""
+            local base_cmd = {
+              "/usr/bin/clangd",
+              "--background-index",
+              "--clang-tidy",
+              "--header-insertion=iwyu",
+              "--completion-style=detailed",
+              "--function-arg-placeholders",
+              "--fallback-style=llvm",
+            }
+            if is_cross_compiling then
+              table.insert(base_cmd, "--query-driver=/usr/bin/arm-none-eabi-*")
+            end
+            return base_cmd
+          end)(),
           init_options = {
             usePlaceholders = true,
             completeUnimported = true,
@@ -101,7 +108,6 @@ return {
       },
     },
   },
-
   {
     "hrsh7th/nvim-cmp",
     optional = true,
