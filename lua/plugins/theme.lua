@@ -20,20 +20,6 @@ return {
     },
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    opts = {
-      highlight_overrides = {
-        all = function(colors)
-          return {
-            ["@keyword.return"] = { style = { "bold" } }, -- Make return statements bold
-          }
-        end,
-      },
-    },
-  },
-  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "cyberdream",
