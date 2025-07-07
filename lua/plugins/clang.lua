@@ -8,12 +8,11 @@ return {
         ".clang-format",
         "compile_commands.json",
         "compile_flags.txt",
-        "configure.ac", -- AutoTools
+        "configure.ac",
       },
     })
   end,
 
-  -- Add C/C++ to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "cpp" } },
@@ -56,11 +55,12 @@ return {
     opts = {
       servers = {
         clangd = {
+          mason = false,
           keys = {
             { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
           },
           root_dir = function(fname)
-            return require("lspconfig.util").root_pattern(
+            local markers = {
               "pico_sdk_import.cmake",
               "Makefile",
               "configure.ac",
@@ -68,10 +68,12 @@ return {
               "config.h.in",
               "meson.build",
               "meson_options.txt",
-              "build.ninja"
-            )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
-              fname
-            ) or require("lspconfig.util").find_git_ancestor(fname)
+              "build.ninja",
+              "compile_commands.json",
+              "compile_flags.txt",
+            }
+            local found = vim.fs.find(markers, { path = fname, upward = true })[1]
+            return found and vim.fs.dirname(found)
           end,
           capabilities = {
             offsetEncoding = { "utf-16" },
