@@ -11,8 +11,12 @@ vim.keymap.set("n", "<A-l>", "<cmd>wincmd l<cr>", { desc = "Move to right window
 vim.keymap.set("n", "<A-s>", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
 vim.keymap.set("n", "<A-v>", "<cmd>split<CR>", { desc = "Split window horizontally" })
 vim.keymap.set("n", "<A-q>", "<cmd>close<CR>", { desc = "Close current window" })
-vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr>", { desc = "Switch to next window" }) -- Duplicated mapping
+vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr>", { desc = "Switch to next window" })
 vim.keymap.set("n", "<C-Tab>", "<cmd>wincmd W<cr>", { desc = "Switch to previous window" })
+
+vim.keymap.set("n", "<leader>fm", function()
+  require("oil").open(vim.loop.cwd())
+end, { desc = "Open Oil file explorer" })
 
 -- Center the cursor in the window
 vim.keymap.set("n", "zz", "zz", { desc = "Recenter screen" })

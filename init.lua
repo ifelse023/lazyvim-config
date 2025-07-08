@@ -15,13 +15,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+
+    { "git@github.com:ifelse023/LazyVim", import = "lazyvim.plugins", version = false },
+    -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     { import = "plugins" },
-    { "windwp/nvim-ts-autotag", enabled = false },
     { "lewis6991/gitsigns.nvim", enabled = false },
-    -- { "williamboman/mason-lspconfig.nvim", enabled = false },
-    -- { "williamboman/mason.nvim", enabled = false },
-    -- { "jay-babu/mason-nvim-dap.nvim", enabled = false },
   },
   defaults = {
     lazy = false,
