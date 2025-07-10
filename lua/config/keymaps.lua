@@ -13,11 +13,12 @@ vim.keymap.set("n", "<A-v>", "<cmd>split<CR>", { desc = "Split window horizontal
 vim.keymap.set("n", "<A-q>", "<cmd>close<CR>", { desc = "Close current window" })
 vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr>", { desc = "Switch to next window" })
 vim.keymap.set("n", "<C-Tab>", "<cmd>wincmd W<cr>", { desc = "Switch to previous window" })
-
+vim.keymap.set("n", "<leader>v", "viw", { desc = "Select inner word" })
 vim.keymap.set("n", "<leader>fm", function()
   require("oil").open(vim.loop.cwd())
 end, { desc = "Open Oil file explorer" })
 
+vim.keymap.set("n", "q", "<nop>", { noremap = true })
 -- Center the cursor in the window
 vim.keymap.set("n", "zz", "zz", { desc = "Recenter screen" })
 

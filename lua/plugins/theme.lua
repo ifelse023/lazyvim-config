@@ -13,12 +13,23 @@ return {
           FlashMatch = { fg = colors.magenta, bg = colors.bg },
           FlashCurrent = { fg = colors.green, bg = colors.bg },
           FlashPrompt = { link = "NormalFloat" },
-          ["@keyword.return"] = { fg = "#5ef1ff", bold = true },
+          ["@keyword.return"] = { fg = "#5ef1ff" },
           ["@character.printf"] = { fg = "#2ac3de" },
+          ["@lsp.typemod.function.defaultLibrary"] = { fg = "#2bbac5" },
+          ["@keyword.directive.c"] = { fg = "#f5c2e7" },
+          ["cPreCondit"] = { fg = "#f5c2e7" },
+          ["cDefine"] = { fg = "#f5c2e7" },
+          ["cInclude"] = { fg = "#f5c2e7" },
+          ["@keyword.directive.define.c"] = { fg = "#f5c2e7" },
+          ["@keyword.import.c"] = { fg = "#f5c2e7" },
+          ["@lsp.type.parameter.c"] = { fg = "#ff6e5e" },
+          ["@lsp.type.parameter.cpp"] = { fg = "#ff6e5e" },
+          ["@keyword.modifier.c"] = { fg = "#ff9e64" },
         }
       end,
     },
   },
+
   {
     "LazyVim/LazyVim",
     opts = {
