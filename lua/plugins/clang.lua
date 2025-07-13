@@ -76,7 +76,7 @@ return {
           cmd = (function()
             local is_cross_compiling = vim.fn.glob("**/pico_sdk_import.cmake") ~= ""
             local base_cmd = {
-              "/usr/bin/clangd",
+              "clangd",
               "--background-index",
               "--clang-tidy",
               "--header-insertion=iwyu",

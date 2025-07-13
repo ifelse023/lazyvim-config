@@ -15,9 +15,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
-
-    { "git@github.com:ifelse023/LazyVim", import = "lazyvim.plugins", version = false },
     -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    -- { "git@github.com:ifelse023/LazyVim", import = "lazyvim.plugins", version = false },
+    { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
     { import = "plugins" },
     { "lewis6991/gitsigns.nvim", enabled = false },
   },

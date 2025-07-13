@@ -30,13 +30,7 @@ return {
       end,
     },
   },
-  {
-    "nyoom-engineering/oxocarbon.nvim",
-  },
-  -- Using Lazy
-  {
-    "navarasu/onedark.nvim",
-  },
+
   {
     "LazyVim/LazyVim",
     opts = {
