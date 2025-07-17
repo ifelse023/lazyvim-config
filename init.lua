@@ -17,7 +17,7 @@ require("lazy").setup({
   spec = {
     -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- { "git@github.com:ifelse023/LazyVim", import = "lazyvim.plugins", version = false },
-    { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
+    { dir = "/home/wasd/dev/LazyVim", import = "lazyvim.plugins" },
     { import = "plugins" },
     { "lewis6991/gitsigns.nvim", enabled = false },
   },
