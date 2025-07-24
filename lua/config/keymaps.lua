@@ -62,16 +62,3 @@ end, { desc = "Debug: Step Out" })
 vim.keymap.set("n", "<F9>", function()
   dap.toggle_breakpoint()
 end, { desc = "Debug: Toggle Breakpoint" })
-
-vim.keymap.set("n", "<C-s>", ":w<CR>")
-vim.keymap.set("v", "<C-c>", '"+y')
-vim.keymap.set("n", "<C-v>", '"+P')
-vim.keymap.set("v", "<C-v>", '"+P')
-vim.keymap.set("c", "<C-v>", "<C-R>+")
-vim.keymap.set("i", "<C-v>", '<ESC>l"+Pli')
-
--- Terminal, command-line and general paste mappings
-vim.api.nvim_set_keymap("", "<C-v>", '"+p<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("!", "<C-v>", "<C-R>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<C-v>", "<C-R>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-v>", "<C-R>+", { noremap = true, silent = true })
