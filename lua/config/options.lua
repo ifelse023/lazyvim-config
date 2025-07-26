@@ -6,4 +6,7 @@
 vim.cmd([[
     let g:loaded_ruby_provider = 0
     let g:loaded_perl_provider = 0
+    let g:neovide_refresh_rate=70
 ]])
+
+vim.g.neovide_fullscreen = true
