@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -19,7 +19,12 @@ require("lazy").setup({
     -- { "git@github.com:ifelse023/LazyVim", import = "lazyvim.plugins", version = false },
     { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
     { import = "plugins" },
-    { "lewis6991/gitsigns.nvim", enabled = false },
+    { "lewis6991/gitsigns.nvim",       enabled = false },
+
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      enabled = false
+    }
   },
   defaults = {
     lazy = false,

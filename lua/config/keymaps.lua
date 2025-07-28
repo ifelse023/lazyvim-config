@@ -64,21 +64,51 @@ vim.keymap.set("n", "<F9>", function()
 end, { desc = "Debug: Toggle Breakpoint" })
 
 
+vim.keymap.set("n", "<leader>sz", function()
+  vim.fn.jobstart({ "chezmoi", "apply", "--force" }, {
+    stdout_buffered = true,
+    stderr_buffered = true,
+
+    on_stdout = function(_, data)
+      if data and data[1] ~= "" then
+        vim.notify(table.concat(data, "\n"), vim.log.levels.INFO)
+      end
+    end,
+
+    on_stderr = function(_, data)
+      if data and data[1] ~= "" then
+        vim.notify(table.concat(data, "\n"), vim.log.levels.ERROR)
+      end
+    end,
+
+    on_exit = function(_, code)
+      if code == 0 then
+        vim.notify("chezmoi apply finished successfully", vim.log.levels.INFO)
+      else
+        vim.notify("chezmoi apply failed (exit code " .. code .. ")", vim.log.levels.ERROR)
+      end
+    end,
+  })
+end, { noremap = true, silent = true })
+
 
 if vim.g.neovide then
-  vim.keymap.set('n', '<S-s>', ':w<CR>') -- Save
-  vim.keymap.set('v', '<C-S-c>', '"+y') -- Copy
-  vim.keymap.set('n', '<C-S-v>', '"+P') -- Paste normal mode
-  vim.keymap.set('v', '<C-S-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<C-S-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('n', '<S-s>', ':w<CR>')        -- Save
+  vim.keymap.set('v', '<C-S-c>', '"+y')         -- Copy
+  vim.keymap.set('n', '<C-S-v>', '"+P')         -- Paste normal mode
+  vim.keymap.set('v', '<C-S-v>', '"+P')         -- Paste visual mode
+  vim.keymap.set('c', '<C-S-v>', '<C-R>+')      -- Paste command mode
   vim.keymap.set('i', '<C-S-v>', '<ESC>l"+Pli') -- Paste insert mode
+
+
+  vim.keymap.set("n", "<A-CR>", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
 end
 
 -- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 
 vim.g.neovide_scale_factor = 1.0
@@ -89,5 +119,5 @@ vim.keymap.set("n", "<C-=>", function()
   change_scale_factor(1.25)
 end)
 vim.keymap.set("n", "<C-->", function()
-  change_scale_factor(1/1.25)
+  change_scale_factor(1 / 1.25)
 end)
