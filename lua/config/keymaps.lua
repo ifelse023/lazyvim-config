@@ -11,6 +11,7 @@ vim.keymap.set("n", "<A-l>", "<cmd>wincmd l<cr>", { desc = "Move to right window
 vim.keymap.set("n", "<A-s>", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
 vim.keymap.set("n", "<A-v>", "<cmd>split<CR>", { desc = "Split window horizontally" })
 vim.keymap.set("n", "<A-q>", "<cmd>close<CR>", { desc = "Close current window" })
+vim.keymap.set("n", "<A-k>", "<cmd>close<CR>", { desc = "Close current window" })
 vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr>", { desc = "Switch to next window" })
 vim.keymap.set("n", "<C-Tab>", "<cmd>wincmd W<cr>", { desc = "Switch to previous window" })
 vim.keymap.set("n", "<leader>v", "viw", { desc = "Select inner word" })
@@ -36,7 +37,7 @@ end, { desc = "Switch to next window (terminal-aware)" })
 
 vim.keymap.set("n", "<A-Tab>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<A-t>", "<cmd>tabnew<CR>", { desc = "New tab" })
-vim.keymap.set("n", "<A-d>", "<cmd>bd<CR>", { desc = "Delete buffer" })
+vim.keymap.set("n", "<C-q>", "<cmd>bd<CR>", { desc = "Delete buffer" })
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down and center" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up and center" })
@@ -44,24 +45,6 @@ vim.keymap.set("n", "<C-j>", "10jzz", { desc = "Jump down 10 lines and center" }
 vim.keymap.set("n", "<C-k>", "10kzz", { desc = "Jump up 10 lines and center" })
 
 vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename Symbol" })
-
-local dap = require("dap")
-
-vim.keymap.set("n", "<F10>", function()
-  dap.step_over()
-end, { desc = "Debug: Step Over" })
-
-vim.keymap.set("n", "<F11>", function()
-  dap.step_into()
-end, { desc = "Debug: Step Into" })
-
-vim.keymap.set("n", "<F12>", function()
-  dap.step_out()
-end, { desc = "Debug: Step Out" })
-
-vim.keymap.set("n", "<F9>", function()
-  dap.toggle_breakpoint()
-end, { desc = "Debug: Toggle Breakpoint" })
 
 
 vim.keymap.set("n", "<leader>sz", function()
@@ -91,6 +74,8 @@ vim.keymap.set("n", "<leader>sz", function()
   })
 end, { noremap = true, silent = true })
 
+
+vim.keymap.set('n', '<leader>on', '<cmd>edit ~/misc/notes/random.md<CR>', { desc = 'Open quicknotes file' })
 
 if vim.g.neovide then
   vim.keymap.set('n', '<S-s>', ':w<CR>')        -- Save
