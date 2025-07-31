@@ -19,7 +19,7 @@ vim.keymap.set("n", "<leader>fm", function()
   require("oil").open(vim.loop.cwd())
 end, { desc = "Open Oil file explorer" })
 
-vim.keymap.set("n", "q", "<nop>", { noremap = true })
+-- vim.keymap.set("n", "q", "<nop>", { noremap = true })
 -- Center the cursor in the window
 vim.keymap.set("n", "zz", "zz", { desc = "Recenter screen" })
 
