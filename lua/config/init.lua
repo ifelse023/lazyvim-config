@@ -1,10 +1,10 @@
-_G.Util = require("lazyvim.util")
+_G.Util = require("util")
 
 ---@class LazyVimConfig: LazyVimOptions
 local M = {}
 
 M.version = "14.15.0" -- x-release-please-version
-LazyVim.config = M
+Util.config = M
 
 ---@class LazyVimOptions
 local defaults = {

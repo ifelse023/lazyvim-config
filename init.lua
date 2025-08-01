@@ -120,5 +120,6 @@ require("lazy").setup({
     },
   },
 })
+require("config").init()
 
 vim.cmd.colorscheme("catppuccin")
