@@ -1,18 +1,4 @@
 return {
-  recommended = function()
-    return LazyVim.extras.wants({
-      ft = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-      root = {
-        ".clangd",
-        ".clang-tidy",
-        ".clang-format",
-        "compile_commands.json",
-        "compile_flags.txt",
-        "configure.ac",
-      },
-    })
-  end,
-
   {
     "p00f/clangd_extensions.nvim",
 
@@ -113,5 +99,4 @@ return {
       table.insert(opts.sorting.comparators, 1, require("clangd_extensions.cmp_scores"))
     end,
   },
-
 }

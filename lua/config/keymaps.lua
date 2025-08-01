@@ -1,34 +1,57 @@
-vim.keymap.set("n", "<A-h>", "<cmd>wincmd h<cr>", { desc = "Move to left window" })
-vim.keymap.set("n", "<A-j>", "<cmd>wincmd j<cr>", { desc = "Move to below window" })
-vim.keymap.set("n", "<A-k>", "<cmd>wincmd k<cr>", { desc = "Move to above window" })
-vim.keymap.set("n", "<A-l>", "<cmd>wincmd l<cr>", { desc = "Move to right window" })
-vim.keymap.set("n", "<A-s>", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
-vim.keymap.set("n", "<A-v>", "<cmd>split<CR>", { desc = "Split window horizontally" })
-vim.keymap.set("n", "<A-q>", "<cmd>close<CR>", { desc = "Close current window" })
-vim.keymap.set("n", "<A-k>", "<cmd>close<CR>", { desc = "Close current window" })
-vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr>", { desc = "Switch to next window" })
-vim.keymap.set("n", "<leader>v", "viw", { desc = "Select inner word" })
-vim.keymap.set("n", "<leader>fm", function()
-  require("oil").open(vim.loop.cwd())
-end, { desc = "Open Oil file explorer" })
+-- ───────────────────────────────────────
+-- Helpers
+-- ───────────────────────────────────────
+local function map(mode, lhs, rhs, desc, extra_opts)
+  local opts = vim.tbl_extend("force", { noremap = true, silent = true, desc = desc }, extra_opts or {})
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
 
--- vim.keymap.set("n", "q", "<nop>", { noremap = true })
--- Center the cursor in the window
-vim.keymap.set("n", "zz", "zz", { desc = "Recenter screen" })
+local nmap = function(lhs, rhs, desc, opts)
+  map("n", lhs, rhs, desc, opts)
+end
 
-vim.keymap.set("n", "<C-]>", "<cmd>bnext<cr>", { desc = "Next buffer" })
-vim.keymap.set("n", "<A-[>", "<cmd>bprev<cr>", { desc = "Next buffer" })
-vim.keymap.set("n", "<A-t>", "<cmd>tabnew<CR>", { desc = "New tab" })
-vim.keymap.set("n", "<C-q>", "<cmd>bd<CR>", { desc = "Delete buffer" })
+-- ───────────────────────────────────────
+-- Window navigation / management
+-- ───────────────────────────────────────
+nmap("<A-h>", "<C-w>h", "Move to left window")
+nmap("<A-j>", "<C-w>j", "Move to below window")
+nmap("<A-k>", "<C-w>k", "Move to above window")
+nmap("<A-l>", "<C-w>l", "Move to right window")
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down and center" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up and center" })
-vim.keymap.set("n", "<C-j>", "10jzz", { desc = "Jump down 10 lines and center" })
-vim.keymap.set("n", "<C-k>", "10kzz", { desc = "Jump up 10 lines and center" })
+nmap("<A-s>", ":vsplit<CR>", "Split window vertically")
+nmap("<A-v>", ":split<CR>", "Split window horizontally")
+nmap("<A-q>", ":close<CR>", "Close current window")
+nmap("<Tab>", "<C-w>w", "Next window")
 
-vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+-- ───────────────────────────────────────
+-- Buffers / tabs
+-- ───────────────────────────────────────
+nmap("<C-]>", ":bnext<CR>", "Next buffer")
+nmap("<A-[>", ":bprev<CR>", "Previous buffer")
+nmap("<A-t>", ":tabnew<CR>", "New tab")
+nmap("<C-q>", function()
+  Snacks.bufdelete()
+end, "Delete buffer")
 
-vim.keymap.set("n", "<leader>sz", function()
+-- ───────────────────────────────────────
+-- Cursor movement + recenter helpers
+-- ───────────────────────────────────────
+nmap("<C-d>", "<C-d>zz", "Half-page down + center")
+nmap("<C-u>", "<C-u>zz", "Half-page up + center")
+nmap("<C-j>", "10jzz", "Jump ↓ 10 + center")
+nmap("<C-k>", "10kzz", "Jump ↑ 10 + center")
+nmap("zz", "zz", "Recenter screen")
+
+-- ───────────────────────────────────────
+-- Editing miscellany
+-- ───────────────────────────────────────
+nmap("<leader>v", "viw", "Select inner word")
+nmap("<F2>", vim.lsp.buf.rename, "Rename symbol")
+
+-- ───────────────────────────────────────
+-- chezmoi one-shot helper
+-- ───────────────────────────────────────
+nmap("<leader>sz", function()
   vim.fn.jobstart({ "chezmoi", "apply", "--force" }, {
     stdout_buffered = true,
     stderr_buffered = true,
@@ -38,54 +61,54 @@ vim.keymap.set("n", "<leader>sz", function()
         vim.notify(table.concat(data, "\n"), vim.log.levels.INFO)
       end
     end,
-
     on_stderr = function(_, data)
       if data and data[1] ~= "" then
         vim.notify(table.concat(data, "\n"), vim.log.levels.ERROR)
       end
     end,
-
     on_exit = function(_, code)
-      if code == 0 then
-        vim.notify("chezmoi apply finished successfully", vim.log.levels.INFO)
-      else
-        vim.notify("chezmoi apply failed (exit code " .. code .. ")", vim.log.levels.ERROR)
-      end
+      local level = code == 0 and vim.log.levels.INFO or vim.log.levels.ERROR
+      vim.notify("chezmoi apply exited with code " .. code, level)
     end,
   })
-end, { noremap = true, silent = true })
+end, "chezmoi apply")
 
-vim.keymap.set("n", "<leader>on", "<cmd>edit ~/misc/notes/random.md<CR>", { desc = "Open quicknotes file" })
+nmap("<leader>on", ":edit ~/misc/notes/random.md<CR>", "Open quick-notes")
 
+-- ───────────────────────────────────────
+-- GUI / Neovide-specific tweaks
+-- ───────────────────────────────────────
 if vim.g.neovide then
-  vim.keymap.set("n", "<S-s>", ":w<CR>") -- Save
-  vim.keymap.set("v", "<C-S-c>", '"+y') -- Copy
-  vim.keymap.set("n", "<C-S-v>", '"+P') -- Paste normal mode
-  vim.keymap.set("v", "<C-S-v>", '"+P') -- Paste visual mode
-  vim.keymap.set("c", "<C-S-v>", "<C-R>+") -- Paste command mode
-  vim.keymap.set("i", "<C-S-v>", '<ESC>l"+Pli') -- Paste insert mode
+  nmap("<S-s>", ":w<CR>", "Save file")
 
-  vim.keymap.set("n", "<A-CR>", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
-  vim.keymap.set("n", "<A-Tab>", "<cmd>bnext<cr>", { desc = "Split window vertically" })
+  map({ "n", "v" }, "<C-S-v>", '"+P', "Paste from clipboard")
+  map("v", "<C-S-c>", '"+y', "Copy to clipboard")
+  map("c", "<C-S-v>", "<C-R>+", "Paste (cmd-line)")
+  map("i", "<C-S-v>", '<Esc>"+Pli', "Paste (insert)")
+
+  nmap("<A-CR>", ":vsplit<CR>", "Split window vertically")
+  nmap("<A-Tab>", ":bnext<CR>", "Next buffer")
+
+  -- Neovide zoom
+  local function scale(delta)
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+  end
+  nmap("<C-=>", function()
+    scale(1.25)
+  end, "Zoom in")
+  nmap("<C-->", function()
+    scale(1 / 1.25)
+  end, "Zoom out")
+  nmap("<C-0>", function()
+    vim.g.neovide_scale_factor = 1
+  end, "Zoom reset")
 end
 
--- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
-
-vim.g.neovide_scale_factor = 1.0
-local change_scale_factor = function(delta)
-  vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+-- ───────────────────────────────────────
+-- macOS clipboard (⌘V)
+-- ───────────────────────────────────────
+for _, mode in ipairs({ "", "v", "t" }) do
+  map(mode, "<D-v>", '"+p', "Paste from system clipboard")
 end
-vim.keymap.set("n", "<C-=>", function()
-  change_scale_factor(1.25)
-end)
-vim.keymap.set("n", "<C-->", function()
-  change_scale_factor(1 / 1.25)
-end)
-
-vim.keymap.set("n", "<C-0>", function()
-  vim.g.neovide_scale_factor = 1.0
-end)
+map("!", "<D-v>", "<C-R>+", "Paste (insert-cmd)")
+map("c", "<D-v>", "<C-R>+", "Paste (cmd-line)")

@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
+      { out, "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -15,16 +15,87 @@ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
-    -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- { "git@github.com:ifelse023/LazyVim", import = "lazyvim.plugins", version = false },
+    {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      opts = {
+        delay = 30,
+        preset = "helix",
+        defaults = {},
+        spec = {
+          {
+            mode = { "n", "v" },
+            { "<leader><tab>", group = "tabs" },
+            { "<leader>c", group = "code" },
+            { "<leader>d", group = "debug" },
+            { "<leader>dp", group = "profiler" },
+            { "<leader>f", group = "file/find" },
+            { "<leader>g", group = "git" },
+            { "<leader>gh", group = "hunks" },
+            { "<leader>q", group = "quit/session" },
+            { "<leader>s", group = "search" },
+            { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
+            { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
+            { "[", group = "prev" },
+            { "]", group = "next" },
+            { "g", group = "goto" },
+            { "gs", group = "surround" },
+            { "z", group = "fold" },
+            {
+              "<leader>b",
+              group = "buffer",
+              expand = function()
+                return require("which-key.extras").expand.buf()
+              end,
+            },
+            {
+              "<leader>w",
+              group = "windows",
+              proxy = "<c-w>",
+              expand = function()
+                return require("which-key.extras").expand.win()
+              end,
+            },
+            -- better descriptions
+            { "gx", desc = "Open with system app" },
+          },
+        },
+      },
+      keys = {
+        {
+          "<leader>?",
+          function()
+            require("which-key").show({ global = false })
+          end,
+          desc = "Buffer Keymaps (which-key)",
+        },
+        {
+          "<c-w><space>",
+          function()
+            require("which-key").show({ keys = "<c-w>", loop = true })
+          end,
+          desc = "Window Hydra Mode (which-key)",
+        },
+      },
+      config = function(_, opts)
+        local wk = require("which-key")
+        wk.setup(opts)
+        if not vim.tbl_isempty(opts.spec) then
+          wk.add(opts.spec)
+        end
+      end,
+    },
+
+    { "nvim-lua/plenary.nvim", lazy = true },
     { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
+
+    { import = "plugins.lsp.lsp" },
     { import = "plugins" },
-    { "lewis6991/gitsigns.nvim",       enabled = false },
 
     {
       "nvim-neo-tree/neo-tree.nvim",
-      enabled = false
-    }
+      enabled = false,
+    },
   },
   defaults = {
     lazy = false,
@@ -49,3 +120,5 @@ require("lazy").setup({
     },
   },
 })
+
+vim.cmd.colorscheme("catppuccin")

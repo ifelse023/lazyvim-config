@@ -1,17 +1,4 @@
 return {
-  recommended = function()
-    return LazyVim.extras.wants({
-      ft = { "json", "jsonc", "json5" },
-      root = { "*.json" },
-    })
-  end,
-
-  -- add json to treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = { ensure_installed = { "json5" } },
-  },
-
   -- yaml schema support
   {
     "b0o/SchemaStore.nvim",
@@ -19,7 +6,6 @@ return {
     version = false, -- last release is way too old
   },
 
-  -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
     opts = {

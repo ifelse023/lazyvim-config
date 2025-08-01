@@ -1,9 +1,10 @@
 return {
-
+  -- catppuccin support
   {
     "catppuccin/nvim",
     lazy = true,
     name = "catppuccin",
+    priority = 1000,
     opts = {
       flavour = "mocha",
       highlight_overrides = {
@@ -22,10 +23,12 @@ return {
         end,
       },
       integrations = {
+        blink_cmp = true,
         aerial = true,
         alpha = true,
         cmp = true,
         dashboard = true,
+        notifier = true,
         flash = true,
         fzf = true,
         grug_far = true,
@@ -46,9 +49,8 @@ return {
             information = { "undercurl" },
           },
         },
-        navic = { enabled = true, custom_bg = "lualine" },
         neotest = true,
-        neotree = true,
+        neotree = false,
         noice = true,
         notify = true,
         semantic_tokens = true,
@@ -72,12 +74,6 @@ return {
           end
         end,
       },
-    },
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "catppuccin",
     },
   },
 }
