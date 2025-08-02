@@ -24,6 +24,7 @@ M.picker = nil
 function M.register(picker)
   -- this only happens when using :LazyExtras
   -- so allow to get the full spec
+
   if vim.v.vim_did_enter == 1 then
     return true
   end

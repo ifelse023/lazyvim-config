@@ -1,13 +1,13 @@
 return {
 
--- measure startuptime
-{
-  "dstein64/vim-startuptime",
-  cmd = "StartupTime",
-  config = function()
-    vim.g.startuptime_tries = 10
-  end,
-},
+  -- measure startuptime
+  {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+    config = function()
+      vim.g.startuptime_tries = 10
+    end,
+  },
 
   -- auto pairs
   {
@@ -46,7 +46,6 @@ return {
       { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
   },
-
   {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
@@ -94,6 +93,7 @@ return {
       },
     },
   },
+  { "artemave/workspace-diagnostics.nvim" },
 
   {
     "snacks.nvim",

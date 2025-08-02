@@ -1,9 +1,11 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-vim.diagnostic.config({
-  jump = { float = true },
-})
 
+vim.diagnostic.config({
+  jump = {
+    on_jump = vim.diagnostic.open_float,
+  },
+})
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 vim.g.root_lsp_ignore = { "copilot" }
@@ -28,18 +30,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 _G.LazyVim = require("lazyvim.util")
 LazyVim.plugin.setup()
--- Load options early before plugins
 require("config").load("options")
 require("lazy").setup({
   spec = {
     { import = "plugins.which-key" },
-
     { "nvim-lua/plenary.nvim", lazy = true },
-    -- { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
-
     { import = "plugins.lsp.lsp" },
     { import = "plugins" },
-
     {
       "nvim-neo-tree/neo-tree.nvim",
       enabled = false,
@@ -68,6 +65,5 @@ require("lazy").setup({
     },
   },
 })
--- Initialize full LazyVim config to properly load keymaps and autocmds
 require("config").setup()
 vim.cmd.colorscheme("catppuccin")

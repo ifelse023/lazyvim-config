@@ -1,29 +1,12 @@
 local opt = vim.opt
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-vim.diagnostic.config({
-  jump = { float = true },
-})
-
-vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
-
-vim.g.root_lsp_ignore = { "copilot" }
-
-vim.g.deprecation_warnings = false
-
-vim.g.trouble_lualine = true
-
 vim.cmd([[
     let g:loaded_ruby_provider = 0
     let g:loaded_perl_provider = 0
     let g:neovide_refresh_rate=70
 ]])
 
-vim.diagnostic.config({
-  jump = { float = true },
-})
-
+vim.deprecate = function() end
 vim.g.neovide_fullscreen = false
 
 if vim.g.neovide then

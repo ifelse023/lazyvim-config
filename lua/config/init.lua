@@ -1,4 +1,3 @@
-
 ---@class LazyVimConfig: LazyVimOptions
 local M = {}
 
@@ -36,10 +35,10 @@ local defaults = {
       LogPoint            = ".>",
     },
     diagnostics = {
-      Error = " ",
-      Warn  = " ",
+      Error = " ",
+      Warn  = " ",
       Hint  = " ",
-      Info  = " ",
+      Info  = " ",
     },
     git = {
       added    = " ",
@@ -80,8 +79,6 @@ local defaults = {
       Snippet       = "󱄽 ",
       String        = " ",
       Struct        = "󰆼 ",
-      Supermaven    = " ",
-      TabNine       = "󰏚 ",
       Text          = " ",
       TypeParameter = " ",
       Unit          = " ",
@@ -229,10 +226,6 @@ function M.init()
   -- this is needed to make sure options will be correctly applied
   -- after installing missing plugins
   M.load("options")
-
-  if vim.g.deprecation_warnings == false then
-    vim.deprecate = function() end
-  end
 
   LazyVim.plugin.setup()
 end
