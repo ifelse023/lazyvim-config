@@ -5,6 +5,10 @@ vim.cmd([[
     let g:neovide_refresh_rate=70
 ]])
 
+vim.diagnostic.config({
+  jump = { float = true },
+})
+
 vim.g.neovide_fullscreen = false
 
 if vim.g.neovide then

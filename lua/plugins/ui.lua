@@ -275,7 +275,7 @@ return {
       notifier = { enabled = true },
       scope = { enabled = true },
       statuscolumn = { enabled = false }, -- we set this in options.lua
-      toggle = { map = LazyVim.safe_keymap_set },
+      toggle = { map = vim.keymap.set },
       words = { enabled = true },
     },
     -- stylua: ignore
