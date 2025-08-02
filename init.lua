@@ -1,3 +1,16 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+vim.diagnostic.config({
+  jump = { float = true },
+})
+
+vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+
+vim.g.root_lsp_ignore = { "copilot" }
+
+vim.g.deprecation_warnings = false
+
+vim.g.trouble_lualine = true
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -13,81 +26,16 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
+_G.LazyVim = require("lazyvim.util")
+LazyVim.plugin.setup()
+-- Load options early before plugins
+require("config").load("options")
 require("lazy").setup({
   spec = {
-    {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      opts = {
-        delay = 30,
-        preset = "helix",
-        defaults = {},
-        spec = {
-          {
-            mode = { "n", "v" },
-            { "<leader><tab>", group = "tabs" },
-            { "<leader>c", group = "code" },
-            { "<leader>d", group = "debug" },
-            { "<leader>dp", group = "profiler" },
-            { "<leader>f", group = "file/find" },
-            { "<leader>g", group = "git" },
-            { "<leader>gh", group = "hunks" },
-            { "<leader>q", group = "quit/session" },
-            { "<leader>s", group = "search" },
-            { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
-            { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
-            { "[", group = "prev" },
-            { "]", group = "next" },
-            { "g", group = "goto" },
-            { "gs", group = "surround" },
-            { "z", group = "fold" },
-            {
-              "<leader>b",
-              group = "buffer",
-              expand = function()
-                return require("which-key.extras").expand.buf()
-              end,
-            },
-            {
-              "<leader>w",
-              group = "windows",
-              proxy = "<c-w>",
-              expand = function()
-                return require("which-key.extras").expand.win()
-              end,
-            },
-            -- better descriptions
-            { "gx", desc = "Open with system app" },
-          },
-        },
-      },
-      keys = {
-        {
-          "<leader>?",
-          function()
-            require("which-key").show({ global = false })
-          end,
-          desc = "Buffer Keymaps (which-key)",
-        },
-        {
-          "<c-w><space>",
-          function()
-            require("which-key").show({ keys = "<c-w>", loop = true })
-          end,
-          desc = "Window Hydra Mode (which-key)",
-        },
-      },
-      config = function(_, opts)
-        local wk = require("which-key")
-        wk.setup(opts)
-        if not vim.tbl_isempty(opts.spec) then
-          wk.add(opts.spec)
-        end
-      end,
-    },
+    { import = "plugins.which-key" },
 
     { "nvim-lua/plenary.nvim", lazy = true },
-    { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
+    -- { dir = "/home/wasd/misc/LazyVim", import = "lazyvim.plugins" },
 
     { import = "plugins.lsp.lsp" },
     { import = "plugins" },
@@ -120,6 +68,6 @@ require("lazy").setup({
     },
   },
 })
-require("config").init()
-
+-- Initialize full LazyVim config to properly load keymaps and autocmds
+require("config").setup()
 vim.cmd.colorscheme("catppuccin")

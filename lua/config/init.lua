@@ -1,10 +1,9 @@
-_G.Util = require("util")
 
 ---@class LazyVimConfig: LazyVimOptions
 local M = {}
 
 M.version = "14.15.0" -- x-release-please-version
-Util.config = M
+LazyVim.config = M
 
 ---@class LazyVimOptions
 local defaults = {
@@ -130,7 +129,6 @@ local defaults = {
 
 ---@type LazyVimOptions
 local options
-local lazy_clipboard
 
 ---@param opts? LazyVimOptions
 function M.setup(opts)
@@ -151,77 +149,20 @@ function M.setup(opts)
         M.load("autocmds")
       end
       M.load("keymaps")
-      if lazy_clipboard ~= nil then
-        vim.opt.clipboard = lazy_clipboard
-      end
 
       LazyVim.format.setup()
       LazyVim.root.setup()
-
-      vim.api.nvim_create_user_command("LazyExtras", function()
-        LazyVim.extras.show()
-      end, { desc = "Manage LazyVim extras" })
 
       vim.api.nvim_create_user_command("LazyHealth", function()
         vim.cmd([[Lazy! load all]])
         vim.cmd([[checkhealth]])
       end, { desc = "Load all plugins and run :checkhealth" })
 
-      local health = require("lazy.health")
-      vim.list_extend(health.valid, {
-        "recommended",
-        "desc",
-        "vscode",
-      })
-
       if vim.g.lazyvim_check_order == false then
         return
       end
-
-      -- Check lazy.nvim import order
-      local imports = require("lazy.core.config").spec.modules
-      local function find(pat, last)
-        for i = last and #imports or 1, last and 1 or #imports, last and -1 or 1 do
-          if imports[i]:find(pat) then
-            return i
-          end
-        end
-      end
-      local lazyvim_plugins = find("^lazyvim%.plugins$")
-      local extras = find("^lazyvim%.plugins%.extras%.", true) or lazyvim_plugins
-      local plugins = find("^plugins$") or math.huge
-      if lazyvim_plugins ~= 1 or extras > plugins then
-        local msg = {
-          "The order of your `lazy.nvim` imports is incorrect:",
-          "- `lazyvim.plugins` should be first",
-          "- followed by any `lazyvim.plugins.extras`",
-          "- and finally your own `plugins`",
-          "",
-          "If you think you know what you're doing, you can disable this check with:",
-          "```lua",
-          "vim.g.lazyvim_check_order = false",
-          "```",
-        }
-        vim.notify(table.concat(msg, "\n"), "warn", { title = "LazyVim" })
-      end
     end,
   })
-
-  LazyVim.track("colorscheme")
-  LazyVim.try(function()
-    if type(M.colorscheme) == "function" then
-      M.colorscheme()
-    else
-      vim.cmd.colorscheme(M.colorscheme)
-    end
-  end, {
-    msg = "Could not load your colorscheme",
-    on_error = function(msg)
-      LazyVim.error(msg)
-      vim.cmd.colorscheme("habamax")
-    end,
-  })
-  LazyVim.track()
 end
 
 ---@param buf? number
@@ -288,9 +229,6 @@ function M.init()
   -- this is needed to make sure options will be correctly applied
   -- after installing missing plugins
   M.load("options")
-  -- defer built-in clipboard handling: "xsel" and "pbcopy" can be slow
-  lazy_clipboard = vim.opt.clipboard
-  vim.opt.clipboard = ""
 
   if vim.g.deprecation_warnings == false then
     vim.deprecate = function() end

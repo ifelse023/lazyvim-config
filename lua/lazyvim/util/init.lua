@@ -15,6 +15,8 @@ local LazyUtil = require("lazy.core.util")
 ---@field cmp lazyvim.util.cmp
 local M = {}
 
+M.deprecated = require("lazyvim.util.deprecated")
+
 setmetatable(M, {
   __index = function(t, k)
     if LazyUtil[k] then
