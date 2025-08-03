@@ -24,7 +24,6 @@ setmetatable(M, {
     end
     ---@diagnostic disable-next-line: no-unknown
     t[k] = require("lazyvim.util." .. k)
-    M.deprecated.decorate(k, t[k])
     return t[k]
   end,
 })

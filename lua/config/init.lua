@@ -131,7 +131,8 @@ local options
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {}) or {}
 
-  -- autocmds can be loaded lazily when not opening a file
+  M.load("options") -- ← ensure options are loaded
+
   local lazy_autocmds = vim.fn.argc(-1) == 0
   if not lazy_autocmds then
     M.load("autocmds")
@@ -181,7 +182,7 @@ function M.get_kind_filter(buf)
 end
 
 ---@param name "autocmds" | "options" | "keymaps"
-function M.load(name)
+function M.load(name) -- name ∈ {"autocmds","options","keymaps"}
   local function _load(mod)
     if require("lazy.core.cache").find(mod)[1] then
       LazyVim.try(function()
@@ -189,45 +190,13 @@ function M.load(name)
       end, { msg = "Failed loading " .. mod })
     end
   end
-  local pattern = "LazyVim" .. name:sub(1, 1):upper() .. name:sub(2)
-  -- always load lazyvim, then user file
-  if M.defaults[name] or name == "options" then
-    _load("lazyvim.config." .. name)
-    vim.api.nvim_exec_autocmds("User", { pattern = pattern .. "Defaults", modeline = false })
-  end
-  _load("config." .. name)
-  if vim.bo.filetype == "lazy" then
-    -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
-    vim.cmd([[do VimResized]])
-  end
-  vim.api.nvim_exec_autocmds("User", { pattern = pattern, modeline = false })
-end
 
-M.did_init = false
-function M.init()
-  if M.did_init then
-    return
-  end
-  M.did_init = true
-  local plugin = require("lazy.core.config").spec.plugins.LazyVim
-  if plugin then
-    vim.opt.rtp:append(plugin.dir)
-  end
+  _load("config." .. name) -- <─ your local cfg: lua/config/{name}.lua
 
-  package.preload["lazyvim.plugins.lsp.format"] = function()
-    LazyVim.deprecate([[require("lazyvim.plugins.lsp.format")]], [[LazyVim.format]])
-    return LazyVim.format
-  end
-
-  -- delay notifications till vim.notify was replaced or after 500ms
-  LazyVim.lazy_notify()
-
-  -- load options here, before lazy init while sourcing plugin modules
-  -- this is needed to make sure options will be correctly applied
-  -- after installing missing plugins
-  M.load("options")
-
-  LazyVim.plugin.setup()
+  vim.api.nvim_exec_autocmds("User", {
+    pattern = "LazyVim" .. name:sub(1, 1):upper() .. name:sub(2),
+    modeline = false,
+  })
 end
 
 setmetatable(M, {

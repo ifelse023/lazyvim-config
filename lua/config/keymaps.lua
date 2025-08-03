@@ -308,3 +308,9 @@ if vim.g.neovide then
     vim.g.neovide_scale_factor = 1
   end, "Zoom reset")
 end
+
+-- experiments
+-- Disable built-in mark functionality for 'm' to allow which-key to show surround options
+map("n", "m", "<nop>", { desc = "Disabled to allow mini.surround M prefix" })
+
+map({ 'n', 'v', 'x' }, 'mm', '%', { noremap = true, silent = true })

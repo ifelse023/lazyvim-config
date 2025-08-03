@@ -5,6 +5,10 @@ return {
     delay = 30,
     preset = "helix",
     defaults = {},
+    triggers = {
+      { "<auto>", mode = "nixsoc" },
+      { "m", mode = { "n", "v" } },
+    },
     spec = {
       {
         mode = { "n", "v" },
@@ -22,8 +26,8 @@ return {
         { "[", group = "prev" },
         { "]", group = "next" },
         { "g", group = "goto" },
-        { "gs", group = "surround" },
         { "z", group = "fold" },
+        { "m", group = "surround" },
         {
           "<leader>b",
           group = "buffer",
@@ -59,11 +63,4 @@ return {
       desc = "Window Hydra Mode (which-key)",
     },
   },
-  config = function(_, opts)
-    local wk = require("which-key")
-    wk.setup(opts)
-    if not vim.tbl_isempty(opts.spec) then
-      wk.add(opts.spec)
-    end
-  end,
 }

@@ -63,7 +63,7 @@ return {
       },
 
       keymap = {
-        preset = "super-tab",
+        preset = "cmdline",
       },
     },
   },

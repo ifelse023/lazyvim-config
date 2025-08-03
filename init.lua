@@ -10,7 +10,7 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 vim.g.root_lsp_ignore = { "copilot" }
 
-vim.g.deprecation_warnings = false
+-- vim.g.deprecation_warnings = false
 
 vim.g.trouble_lualine = true
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -29,8 +29,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 _G.LazyVim = require("lazyvim.util")
+
 LazyVim.plugin.setup()
-require("config").load("options")
 require("lazy").setup({
   spec = {
     { import = "plugins.which-key" },
