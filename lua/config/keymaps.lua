@@ -2,7 +2,7 @@ local function map(mode, lhs, rhs, desc_or_opts, extra_opts)
   local default = { noremap = true, silent = true }
   local opts
 
-  if type(desc_or_opts) == "table" then -- new, table-style call
+  if type(desc_or_opts) == "table" then
     opts = vim.tbl_extend("force", default, desc_or_opts)
   else -- old, string-style call
     opts = vim.tbl_extend("force", default, { desc = desc_or_opts }, extra_opts or {})
@@ -25,7 +25,13 @@ nmap("<A-l>", "<C-w>l", "Move to right window")
 
 nmap("<A-s>", ":vsplit<CR>", "Split window vertically")
 nmap("<A-v>", ":split<CR>", "Split window horizontally")
-nmap("<A-q>", ":close<CR>", "Close current window")
+
+nmap("<A-q>", function()
+  if #vim.api.nvim_tabpage_list_wins(0) > 1 then
+    vim.cmd("close")
+  end
+end, "Close current window")
+
 nmap("<Tab>", "<C-w>w", "Next window")
 
 -- ───────────────────────────────────────
@@ -47,15 +53,9 @@ nmap("<C-j>", "10jzz", "Jump ↓ 10 + center")
 nmap("<C-k>", "10kzz", "Jump ↑ 10 + center")
 nmap("zz", "zz", "Recenter screen")
 
--- ───────────────────────────────────────
--- Editing miscellany
--- ───────────────────────────────────────
 nmap("<leader>v", "viw", "Select inner word")
 nmap("<F2>", vim.lsp.buf.rename, "Rename symbol")
 
--- ───────────────────────────────────────
--- chezmoi one-shot helper
--- ───────────────────────────────────────
 nmap("<leader>sz", function()
   vim.fn.jobstart({ "chezmoi", "apply", "--force" }, {
     stdout_buffered = true,
@@ -314,3 +314,24 @@ end
 map("n", "m", "<nop>", { desc = "Disabled to allow mini.surround M prefix" })
 
 map({ 'n', 'v', 'x' }, 'mm', '%', { noremap = true, silent = true })
+
+
+
+local function yank_line_diagnostics()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+  local diags = vim.diagnostic.get(bufnr, { lnum = line })
+
+  if #diags == 0 then
+    vim.notify("No diagnostics on this line", vim.log.levels.INFO)
+    return
+  end
+
+  local msgs = vim.tbl_map(function(d)
+    return d.message
+  end, diags)
+
+  vim.fn.setreg("+", table.concat(msgs, "\n"))
+end
+
+nmap("<leader>xy", yank_line_diagnostics, { desc = "Yank line diagnostics to clipboard" })

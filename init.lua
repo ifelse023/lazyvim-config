@@ -66,4 +66,4 @@ require("lazy").setup({
   },
 })
 require("config").setup()
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("tokyonight-night")

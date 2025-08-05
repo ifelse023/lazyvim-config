@@ -1,75 +1,48 @@
 return {
-  -- catppuccin support
+  -- {
+  --   "scottmckendry/cyberdream.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     variant = "dark",
+  --     italic_comments = true,
+  --     overrides = function(hl)
+  --       return {
+  --         flashbackdrop = { fg = hl.bg_highlight },
+  --         flashlabel = { fg = hl.green, bold = true },
+  --         flashmatch = { fg = hl.red },
+  --         flashcurrent = { fg = hl.magenta, bold = true },
+  --         ["@boolean.c"] = { fg = hl.orange },
+  --         ["@character.printf"] = { fg = "#2ac3de" },
+  --         ["@lsp.typemod.function.defaultlibrary"] = { fg = "#2bbac5" },
+  --         ["@keyword.directive.c"] = { fg = "#f5c2e7" },
+  --         ["cprecondit"] = { fg = "#f5c2e7" },
+  --         ["cdefine"] = { fg = "#f5c2e7" },
+  --         ["cinclude"] = { fg = "#f5c2e7" },
+  --         ["@keyword.directive.define.c"] = { fg = "#f5c2e7" },
+  --         ["@keyword.import.c"] = { fg = "#f5c2e7" },
+  --         ["@lsp.type.parameter.c"] = { fg = hl.red },
+  --         ["@keyword.modifier.c"] = { fg = "#ff9e64" },
+  --       }
+  --     end,
+  --   },
+  --   config = function(_, opts)
+  --     require("cyberdream").setup(opts)
+  --     require("cyberdream").load()
+  --   end,
+  -- },
+
   {
-    "catppuccin/nvim",
-    lazy = true,
-    name = "catppuccin",
+    "folke/tokyonight.nvim",
     priority = 1000,
-    opts = {
-      flavour = "mocha",
-      highlight_overrides = {
-        mocha = function(cp)
-          return {
-            YankyYanked = {
-              bg = cp.peach,
-              fg = cp.mantle,
-              bold = true,
-            },
-            YankyPut = {
-              bg = cp.lavender,
-              fg = cp.mantle,
-            },
-          }
+    config = function()
+      require("tokyonight").setup({
+        on_highlights = function(hl, c)
+          hl.FlashLabel = { bg = "#16181a", fg = "#5eff6c", bold = true }
+          hl.FlashMatch = { fg = c.fg_dark }
+          hl.FlashCurrent = { bg = "#16181a", fg = c.orange, bold = true }
         end,
-      },
-      integrations = {
-        blink_cmp = true,
-        aerial = true,
-        alpha = true,
-        cmp = true,
-        dashboard = true,
-        notifier = true,
-        flash = true,
-        fzf = true,
-        grug_far = true,
-        gitsigns = true,
-        headlines = true,
-        indent_blankline = { enabled = true },
-        leap = true,
-        lsp_trouble = true,
-        markdown = true,
-        mini = true,
-        native_lsp = {
-          enabled = true,
-          underlines = {
-            errors = { "undercurl" },
-            hints = { "undercurl" },
-            warnings = { "undercurl" },
-            information = { "undercurl" },
-          },
-        },
-        neotree = false,
-        noice = true,
-        semantic_tokens = true,
-        snacks = {
-          enabled = true,
-          indent_scope_color = "lavender",
-        },
-        treesitter = true,
-        treesitter_context = true,
-        which_key = true,
-      },
-    },
-    specs = {
-      {
-        "akinsho/bufferline.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if (vim.g.colors_name or ""):find("catppuccin") then
-            opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
-          end
-        end,
-      },
-    },
+      })
+    end,
   },
 }
