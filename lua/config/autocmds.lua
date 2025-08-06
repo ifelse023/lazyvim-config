@@ -100,11 +100,3 @@ vim.api.nvim_create_autocmd("InsertEnter", {
   pattern = "*",
   command = "norm zz",
 })
-
-if vim.g.neovide then
-  vim.api.nvim_create_autocmd("VimLeave", {
-    callback = function()
-      os.execute("hyprctl dispatch focusworkspaceoncurrentmonitor 2")
-    end,
-  })
-end

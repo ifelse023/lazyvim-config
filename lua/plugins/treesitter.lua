@@ -19,59 +19,63 @@ return {
       { "<c-space>", desc = "Increment Selection" },
       { "<bs>", desc = "Decrement Selection", mode = "x" },
     },
-    opts = {
-      highlight = { enable = true },
-      indent = { enable = true },
-      ensure_installed = {
-        "bash",
-        "asm",
-        "zig",
-        "rust",
-        "c",
-        "diff",
-        "rust",
-        "json",
-        "json5",
-        "rst",
-        "ninja",
-        "jsonc",
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "printf",
-        "python",
-        "query",
-        "hyprlang",
-        "regex",
-        "nix",
-        "toml",
-        "yaml",
-        "just",
-        "nasm",
-        "asm",
-        "fish",
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        modules = {},
+        sync_install = false,
+        ignore_install = {},
+        auto_install = true,
+        highlight = { enable = true },
+        indent = { enable = true },
+        ensure_installed = {
+          "bash",
+          "asm",
+          "zig",
+          "rust",
+          "c",
+          "diff",
+          "json",
+          "json5",
+          "rst",
+          "ninja",
+          "jsonc",
+          "lua",
+          "luadoc",
+          "luap",
+          "markdown",
+          "markdown_inline",
+          "printf",
+          "python",
+          "query",
+          "hyprlang",
+          "regex",
+          "nix",
+          "toml",
+          "yaml",
+          "just",
+          "nasm",
+          "fish",
         },
-      },
-      textobjects = {
-        move = {
+        incremental_selection = {
           enable = true,
-          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
-          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+          keymaps = {
+            init_selection = "<C-space>",
+            node_incremental = "<C-space>",
+            scope_incremental = false,
+            node_decremental = "<bs>",
+          },
         },
-      },
-    },
+        textobjects = {
+          move = {
+            enable = true,
+            goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+            goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+            goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+            goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+          },
+        },
+      })
+    end,
   },
 
   {
@@ -79,11 +83,7 @@ return {
     event = "VeryLazy",
     enabled = true,
     config = function()
-      -- If treesitter is already loaded, we need to run config again for textobjects
-      if LazyVim.is_loaded("nvim-treesitter") then
-        local opts = LazyVim.opts("nvim-treesitter")
-        require("nvim-treesitter.configs").setup({ textobjects = opts.textobjects })
-      end
+      -- Textobjects configuration is now handled in the main treesitter config above
 
       -- When in diff mode, we want to use the default
       -- vim text objects c & C instead of the treesitter ones.
