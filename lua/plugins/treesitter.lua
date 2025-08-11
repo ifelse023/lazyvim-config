@@ -33,6 +33,7 @@ return {
           "zig",
           "rust",
           "c",
+          "haskell",
           "diff",
           "json",
           "json5",

@@ -203,6 +203,19 @@ return {
     keys = {
       { "<c-j>", "<c-j>", ft = "fzf", mode = "t", nowait = true },
       { "<c-k>", "<c-k>", ft = "fzf", mode = "t", nowait = true },
+
+      {
+        "<leader>no",
+        function()
+          require("fzf-lua").files({
+            cwd = vim.fn.expand("~/misc/notes"),
+            fd_opts = [[--type f --hidden --strip-cwd-prefix --exclude .git --exclude ".obsidian" --extension md]],
+            prompt = "Notes> ",
+            previewer = "builtin",
+          })
+        end,
+        desc = "Select notes",
+      },
       {
         "<leader>,",
         "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>",

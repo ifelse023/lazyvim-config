@@ -264,6 +264,7 @@ return {
     opts = {
       indent = { enabled = true },
       input = { enabled = true },
+      image = { enabled = false },
       notifier = { enabled = true },
       scope = { enabled = true },
       statuscolumn = { enabled = false }, -- we set this in options.lua
@@ -273,7 +274,7 @@ return {
     -- stylua: ignore
     keys = {
       {
-        "<leader>n",
+        "<leader>xn",
         function()
           if Snacks.config.picker and Snacks.config.picker.enabled then
             Snacks.picker.notifications()
