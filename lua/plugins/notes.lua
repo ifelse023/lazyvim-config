@@ -3,13 +3,14 @@ return {
   version = "*",
   lazy = true,
   event = {
-    "BufReadPre " .. vim.fn.expand("~/misc/notes") .. "/**.md",
-    "BufNewFile " .. vim.fn.expand("~/misc/notes") .. "/**.md",
+    "BufReadPre " .. vim.fn.expand("~/notes") .. "/**.md",
+    "BufNewFile " .. vim.fn.expand("~/notes") .. "/**.md",
   },
   ft = "markdown",
   opts = {
+    legacy_commands = false,
     workspaces = {
-      { name = "notes", path = "~/misc/notes" },
+      { name = "notes", path = "~/notes" },
     },
 
     picker = { name = "fzf-lua" },
@@ -29,23 +30,17 @@ return {
       img_folder = "assets/img",
       confirm_img_paste = true,
     },
-
-    disable_frontmatter = true,
-
+    -- disable_frontmatter = true,
     preferred_link_style = "wiki",
-    note_id_func = function(title)
-      local suffix = title and title:gsub("%s+", "-"):gsub("[^%w%-]", ""):lower() or ""
-      return os.date("%Y%m%d%H%M%S") .. (suffix ~= "" and "-" .. suffix or "")
-    end,
   },
   keys = function(_, keys)
-    vim.keymap.set("n", "<leader>nn", "<cmd>ObsidianNew<CR>", { desc = "New note" })
-    vim.keymap.set("n", "<leader>nt", "<cmd>ObsidianToday<CR>", { desc = "Today’s note" })
-    vim.keymap.set("n", "<leader>ny", "<cmd>ObsidianYesterday<CR>", { desc = "Yesterday’s note" })
-    vim.keymap.set("n", "<leader>ns", "<cmd>ObsidianSearch<CR>", { desc = "Search notes" })
-    vim.keymap.set("n", "<leader>nq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Quick switch note" })
-    vim.keymap.set("n", "<leader>nl", "<cmd>ObsidianLinks<CR>", { desc = "List links in note" })
-    vim.keymap.set("n", "<leader>np", "<cmd>ObsidianPasteImg<CR>", { desc = "Paste image" })
+    vim.keymap.set("n", "<leader>nn", "<cmd>Obsidian new<CR>", { desc = "New note" })
+    vim.keymap.set("n", "<leader>nt", "<cmd>Obsidian today<CR>", { desc = "Today's note" })
+    vim.keymap.set("n", "<leader>ny", "<cmd>Obsidian yesterday<CR>", { desc = "Yesterday's note" })
+    vim.keymap.set("n", "<leader>ns", "<cmd>Obsidian search<CR>", { desc = "Search notes" })
+    vim.keymap.set("n", "<leader>nq", "<cmd>Obsidian quick_switch<CR>", { desc = "Quick switch note" })
+    vim.keymap.set("n", "<leader>nl", "<cmd>Obsidian links<CR>", { desc = "List links in note" })
+    vim.keymap.set("n", "<leader>ni", "<cmd>Obsidian paste_img<CR>", { desc = "Paste image" })
     return keys
   end,
 }

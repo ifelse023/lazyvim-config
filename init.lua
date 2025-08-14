@@ -66,4 +66,4 @@ require("lazy").setup({
   },
 })
 require("config").setup()
-vim.cmd.colorscheme("cyberdream")
+vim.cmd.colorscheme("catppuccin")

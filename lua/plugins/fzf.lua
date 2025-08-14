@@ -208,8 +208,8 @@ return {
         "<leader>no",
         function()
           require("fzf-lua").files({
-            cwd = vim.fn.expand("~/misc/notes"),
-            fd_opts = [[--type f --hidden --strip-cwd-prefix --exclude .git --exclude ".obsidian" --extension md]],
+            cwd = vim.fn.expand("~/notes"),
+            fd_opts = [[--type f --hidden --strip-cwd-prefix --exclude .git --exclude ".obsidian" --exclude "Excalidraw" --extension=md]],
             prompt = "Notes> ",
             previewer = "builtin",
           })

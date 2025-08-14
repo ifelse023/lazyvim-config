@@ -78,7 +78,7 @@ nmap("<leader>sz", function()
   })
 end, "chezmoi apply")
 
-nmap("<leader>on", ":edit ~/misc/notes/random.md<CR>", "Open quick-notes")
+nmap("<leader>on", ":edit ~/notes/random.md<CR>", "Open quick-notes")
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
