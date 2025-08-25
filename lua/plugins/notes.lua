@@ -38,7 +38,7 @@ return {
     vim.keymap.set("n", "<leader>nt", "<cmd>Obsidian today<CR>", { desc = "Today's note" })
     vim.keymap.set("n", "<leader>ny", "<cmd>Obsidian yesterday<CR>", { desc = "Yesterday's note" })
     vim.keymap.set("n", "<leader>ns", "<cmd>Obsidian search<CR>", { desc = "Search notes" })
-    vim.keymap.set("n", "<leader>nq", "<cmd>Obsidian quick_switch<CR>", { desc = "Quick switch note" })
+    vim.keymap.set("n", "<leader>nf", "<cmd>Obsidian quick_switch<CR>", { desc = "Quick switch note" })
     vim.keymap.set("n", "<leader>nl", "<cmd>Obsidian links<CR>", { desc = "List links in note" })
     vim.keymap.set("n", "<leader>ni", "<cmd>Obsidian paste_img<CR>", { desc = "Paste image" })
     return keys

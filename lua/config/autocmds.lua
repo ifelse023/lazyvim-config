@@ -91,3 +91,17 @@ vim.api.nvim_create_autocmd("InsertEnter", {
   pattern = "*",
   command = "norm zz",
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "asm", "nasm", "gas" },
+  callback = function()
+    vim.bo.commentstring = "// %s"
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.cmd.colorscheme("cyberdream")
+  end,
+})

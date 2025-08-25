@@ -2,11 +2,21 @@ return {
 
   {
     "mrcjkb/haskell-tools.nvim",
-    version = "^6", -- optional bump; v6 is current
-    ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
-    dependencies = {},
-    config = function() end,
+    version = "^6",
+    lazy = false,
+    init = function()
+      vim.g.haskell_tools = {
+        hls = {
+          default_settings = {
+            haskell = {
+              formattingProvider = "ormolu",
+            },
+          },
+        },
+      }
+    end,
   },
+
   {
     "mrcjkb/haskell-snippets.nvim",
     dependencies = { "L3MON4D3/LuaSnip" },
@@ -17,10 +27,10 @@ return {
     end,
   },
 
-  {
-    "monkoose/fzf-hoogle.vim",
-    ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
-  },
+  -- {
+  --   "monkoose/fzf-hoogle.vim",
+  --   ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
+  -- },
   -- Make sure lspconfig doesn't start hls,
   -- as it conflicts with haskell-tools
   {
