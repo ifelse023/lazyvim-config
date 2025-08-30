@@ -72,8 +72,10 @@ opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 
 opt.smoothscroll = true
-opt.foldexpr = "v:lua.require'util'.ui.foldexpr()"
-opt.foldmethod = "expr"
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
 opt.foldtext = ""
 
 -- Fix markdown indentation settings
