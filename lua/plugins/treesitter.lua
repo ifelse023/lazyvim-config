@@ -37,6 +37,7 @@ return {
           "diff",
           "json",
           "json5",
+          "kdl",
           "rst",
           "ninja",
           "jsonc",

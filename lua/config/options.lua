@@ -4,7 +4,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.neovide_refresh_rate = 70
 
-vim.g.neovide_fullscreen = true
+vim.g.neovide_fullscreen = false
 
 -- somehow a fix for lualine in neovide
 if vim.g.neovide then
