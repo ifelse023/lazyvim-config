@@ -32,6 +32,7 @@ return {
           "asm",
           "zig",
           "rust",
+          "ron",
           "c",
           "haskell",
           "diff",
