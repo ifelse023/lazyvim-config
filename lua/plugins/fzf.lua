@@ -1,4 +1,3 @@
-
 local function symbols_filter(entry, ctx)
   if ctx.symbols_filter == nil then
     ctx.symbols_filter = LazyVim.config.get_kind_filter(ctx.bufnr) or false

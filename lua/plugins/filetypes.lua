@@ -132,7 +132,7 @@ return {
     end,
   },
 
-  -- Notes (Obsidian)
+  -- Notes
   {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
@@ -141,6 +141,8 @@ return {
       "BufReadPre " .. vim.fn.expand("~/notes") .. "/**.md",
       "BufNewFile " .. vim.fn.expand("~/notes") .. "/**.md",
     },
+
+    ui = { enable = false },
     ft = "markdown",
     opts = {
       legacy_commands = false,
@@ -176,4 +178,3 @@ return {
     end,
   },
 }
-

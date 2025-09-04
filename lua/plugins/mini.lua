@@ -1,5 +1,5 @@
 return {
-
+  { "nvim-mini/mini.basics", version = false },
   {
     "echasnovski/mini.comment",
     event = "VeryLazy",

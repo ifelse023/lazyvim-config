@@ -2,15 +2,15 @@ local opt = vim.opt
 
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
-vim.g.neovide_refresh_rate = 70
 
-vim.g.neovide_fullscreen = false
+-- vim.g.neovide_refresh_rate = 70
+-- vim.g.neovide_fullscreen = false
+--
+-- if vim.g.neovide then
+--   opt.columns = 200 -- width  (⌊2560 px / 12.8 px⌋)
+--   opt.lines = 86 -- height (⌊ 800 px / 16.67 px⌋)
+-- end
 
--- somehow a fix for lualine in neovide
-if vim.g.neovide then
-  opt.columns = 200 -- width  (⌊2560 px / 12.8 px⌋)
-  opt.lines = 86 -- height (⌊ 800 px / 16.67 px⌋)
-end
 opt.autowrite = true -- Enable auto write
 -- only set clipboard if not in ssh, to make sure the OSC 52
 -- integration works automatically. Requires Neovim >= 0.10.0

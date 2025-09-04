@@ -1,28 +1,8 @@
 return {
-  {
-    "miikanissi/modus-themes.nvim",
-    priority = 1000,
-    opts = {
-      style = "auto",
-      variant = "default",
-      on_highlights = function(hl, c)
-        hl["@character.printf"] = { fg = c.cyan_warmer }
-        hl["@lsp.typemod.function.defaultlibrary"] = { fg = c.indigo }
-        hl["@lsp.type.parameter.c"] = { fg = c.fg_alt }
-        hl["@keyword.directive.c"] = { fg = "#ffbd5e" }
-        hl["@keyword.directive.define.c"] = { fg = "#ffbd5e" }
-        hl["@keyword.import.c"] = { fg = "#ffbd5e" }
-      end,
-    },
-    config = function(_, opts)
-      require("modus-themes").setup(opts)
-      vim.cmd.colorscheme("modus")
-    end,
-  },
+
   {
     "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
+    lazy = true,
     opts = {
       variant = "dark",
       italic_comments = true,
@@ -55,6 +35,28 @@ return {
     config = function(_, opts)
       require("cyberdream").setup(opts)
       require("cyberdream").load()
+    end,
+  },
+  {
+    "miikanissi/modus-themes.nvim",
+    lazy = false,
+    priority = 1000,
+    dim_inactive = true,
+    opts = {
+      style = "auto",
+      variant = "default",
+      on_highlights = function(hl, c)
+        hl["@character.printf"] = { fg = c.cyan_warmer }
+        hl["@lsp.typemod.function.defaultlibrary"] = { fg = c.indigo }
+        hl["@lsp.type.parameter.c"] = { fg = c.fg_alt }
+        hl["@keyword.directive.c"] = { fg = "#ffbd5e" }
+        hl["@keyword.directive.define.c"] = { fg = "#ffbd5e" }
+        hl["@keyword.import.c"] = { fg = "#ffbd5e" }
+      end,
+    },
+    config = function(_, opts)
+      require("modus-themes").setup(opts)
+      vim.cmd.colorscheme("modus")
     end,
   },
 }

@@ -2,7 +2,6 @@
 ---@field root? boolean
 ---@field cwd? string
 ---@field buf? number
----@field show_untracked? boolean
 
 local M = {}
 
@@ -10,20 +9,10 @@ local M = {}
 ---@param opts? lazyvim.util.pick.Opts
 function M.open(command, opts)
   command = command ~= "auto" and command or "files"
-  opts = opts or {}
-  opts = vim.deepcopy(opts)
-
-  if type(opts.cwd) == "boolean" then
-    LazyVim.warn("LazyVim.pick: opts.cwd should be a string or nil")
-    opts.cwd = nil
-  end
+  opts = vim.deepcopy(opts or {})
 
   if not opts.cwd and opts.root ~= false then
     opts.cwd = LazyVim.root({ buf = opts.buf })
-  end
-
-  if opts.cmd == nil and command == "git_files" and opts.show_untracked then
-    opts.cmd = "git ls-files --exclude-standard --cached --others"
   end
 
   return require("fzf-lua")[command](opts)
@@ -32,9 +21,8 @@ end
 ---@param command? string
 ---@param opts? lazyvim.util.pick.Opts
 function M.wrap(command, opts)
-  opts = opts or {}
   return function()
-    M.open(command, vim.deepcopy(opts))
+    M.open(command, opts)
   end
 end
 

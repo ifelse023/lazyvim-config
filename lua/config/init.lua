@@ -6,12 +6,6 @@ LazyVim.config = M
 
 ---@class LazyVimOptions
 local defaults = {
-  -- -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
-  -- ---@type string|fun()
-  -- colorscheme = function()
-  --   require("catppuccin").load()
-  -- end,
-  -- load the default settings
   defaults = {
     keymaps = true, -- lazyvim.config.keymaps
     -- lazyvim.config.options can't be configured here since that's loaded before lazyvim setup

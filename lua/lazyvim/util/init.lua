@@ -4,15 +4,11 @@ local LazyUtil = require("lazy.core.util")
 ---@field config LazyVimConfig
 ---@field lsp lazyvim.util.lsp
 ---@field root lazyvim.util.root
----@field terminal lazyvim.util.terminal
 ---@field format lazyvim.util.format
----@field inject lazyvim.util.inject
 ---@field lualine lazyvim.util.lualine
 ---@field mini lazyvim.util.mini
----@field pick lazyvim.util.pick
 ---@field cmp lazyvim.util.cmp
 local M = {}
-
 
 setmetatable(M, {
   __index = function(t, k)

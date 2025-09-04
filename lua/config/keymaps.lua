@@ -18,10 +18,6 @@ end
 -- ───────────────────────────────────────
 -- Window navigation / management
 -- ───────────────────────────────────────
-nmap("<A-h>", "<C-w>h", "Move to left window")
-nmap("<A-j>", "<C-w>j", "Move to below window")
-nmap("<A-k>", "<C-w>k", "Move to above window")
-nmap("<A-l>", "<C-w>l", "Move to right window")
 
 nmap("<A-s>", ":vsplit<CR>", "Split window vertically")
 nmap("<A-v>", ":split<CR>", "Split window horizontally")
@@ -31,8 +27,6 @@ nmap("<A-q>", function()
     vim.cmd("close")
   end
 end, "Close current window")
-
-nmap("<Tab>", "<C-w>w", "Next window")
 
 -- ───────────────────────────────────────
 -- Buffers / tabs
@@ -49,8 +43,10 @@ end, "Delete buffer")
 -- ───────────────────────────────────────
 nmap("<C-d>", "<C-d>zz", "Half-page down + center")
 nmap("<C-u>", "<C-u>zz", "Half-page up + center")
-nmap("<C-j>", "10jzz", "Jump ↓ 10 + center")
-nmap("<C-k>", "10kzz", "Jump ↑ 10 + center")
+
+nmap("gj", "10jzz", "Jump ↓ 10 + center")
+nmap("gk", "10kzz", "Jump ↑ 10 + center")
+
 nmap("zz", "zz", "Recenter screen")
 
 nmap("<leader>v", "viw", "Select inner word")
@@ -92,9 +88,9 @@ map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
+map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
 -- Resize window using <ctrl> arrow keys
 map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
 map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
@@ -113,9 +109,6 @@ map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>bd", function()
-  Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
 map("n", "<leader>bd", function()
   Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
@@ -269,46 +262,11 @@ map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
 Snacks.toggle.zen():map("<leader>uz")
 
--- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+nmap("<Tab>", "<C-w>w", "Next window")
+nmap("<S-Tab>", "<Cmd>b#<CR>", "Alternate buffer")
+nmap("<leader><Tab>", "<Cmd>FzfLua buffers<CR>", "Buffers")
 
 
--- ───────────────────────────────────────
--- Neovide-specific tweaks
--- ───────────────────────────────────────
-if vim.g.neovide then
-  nmap("<S-s>", ":w<CR>", "Save file")
-
-  map({ "n", "v" }, "<C-S-v>", '"+P', "Paste from clipboard")
-  map("v", "<C-S-c>", '"+y', "Copy to clipboard")
-  map("c", "<C-S-v>", "<C-R>+", "Paste (cmd-line)")
-  map("i", "<C-S-v>", '<Esc>"+Pli', "Paste (insert)")
-
-  nmap("<A-CR>", ":vsplit<CR>", "Split window vertically")
-  nmap("<A-Tab>", ":bnext<CR>", "Next buffer")
-
-  -- Neovide zoom
-  local function scale(delta)
-    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
-  end
-  nmap("<C-=>", function()
-    scale(1.25)
-  end, "Zoom in")
-  nmap("<C-->", function()
-    scale(1 / 1.25)
-  end, "Zoom out")
-  nmap("<C-0>", function()
-    vim.g.neovide_scale_factor = 1
-  end, "Zoom reset")
-end
-
--- experiments
 -- Disable built-in mark functionality for 'm' to allow which-key to show surround options
 map("n", "m", "<nop>", { desc = "Disabled to allow mini.surround M prefix" })
 
@@ -336,7 +294,10 @@ end
 nmap("<leader>xy", yank_line_diagnostics, { desc = "Yank line diagnostics to clipboard" })
 
 
+vim.keymap.set('n', '<space><space>f', function()
+  vim.fn.system('zellij run -n Yazi -c -f -x 3% -y 3% --width 94% --height 94% -- bash ~/.config/nvim/yazi-picker.sh e ' .. vim.fn.expand('%'))
 
+end)
 
 vim.keymap.set("n", "q", "<Nop>")
 vim.keymap.set("n", "Q", "<Nop>")

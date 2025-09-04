@@ -98,3 +98,77 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.commentstring = "// %s"
   end,
 })
+
+-- Helix-like directory picker behavior for Neovim + fzf-lua (Neovim ≥ 0.10)
+local grp = vim.api.nvim_create_augroup("DirPicker", { clear = true })
+
+local function realdir(p)
+  return vim.uv.fs_realpath(p) or p
+end
+
+local function open_picker_for_dir(dir, start_buf)
+  local ok, fzf = pcall(require, "fzf-lua")
+  if not ok then
+    return
+  end
+  local actions = require("fzf-lua.actions")
+  fzf.files({
+    cwd = dir,
+    actions = {
+      ["default"] = function(sel, opts)
+        actions.file_edit(sel, opts)
+        if start_buf then
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(start_buf) then
+              pcall(vim.api.nvim_buf_delete, start_buf, { force = true })
+            end
+          end)
+        end
+      end,
+    },
+  })
+end
+
+-- On startup: open picker if started with a single directory arg, or with no args (CWD).
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = grp,
+  desc = "Open picker on startup for dir arg or CWD",
+  callback = function()
+    if #vim.api.nvim_list_uis() == 0 then
+      return
+    end
+    local argc = vim.fn.argc()
+    local start_buf = vim.api.nvim_get_current_buf()
+
+    if argc == 1 then
+      local arg = vim.fn.argv(0) --[[@as string]]
+      if vim.fn.isdirectory(arg) == 1 then
+        vim.b[start_buf].dirpicker_done = true
+        open_picker_for_dir(realdir(arg), start_buf)
+      end
+      return
+    end
+
+    if argc == 0 then
+      vim.b[start_buf].dirpicker_done = true
+      open_picker_for_dir(realdir(vim.uv.cwd()), start_buf)
+    end
+  end,
+})
+
+-- When entering a directory buffer later, open the picker for that directory once.
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = grp,
+  desc = "Open picker when entering a directory buffer",
+  callback = function(args)
+    if vim.b[args.buf].dirpicker_done then
+      return
+    end
+    local name = vim.api.nvim_buf_get_name(args.buf)
+    if name == "" or vim.fn.isdirectory(name) ~= 1 then
+      return
+    end
+    vim.b[args.buf].dirpicker_done = true
+    open_picker_for_dir(realdir(name), args.buf)
+  end,
+})
