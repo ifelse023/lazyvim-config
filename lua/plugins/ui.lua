@@ -182,26 +182,6 @@ return {
       return opts
     end,
   },
-
-  {
-    "echasnovski/mini.icons",
-    lazy = true,
-    opts = {
-      file = {
-        [".keep"] = { glyph = "󰊢", hl = "MiniIconsGrey" },
-      },
-      filetype = {
-        dotenv = { glyph = "", hl = "MiniIconsYellow" },
-      },
-    },
-    init = function()
-      package.preload["nvim-web-devicons"] = function()
-        require("mini.icons").mock_nvim_web_devicons()
-        return package.loaded["nvim-web-devicons"]
-      end
-    end,
-  },
-
   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
   {
     "folke/noice.nvim",
@@ -276,11 +256,7 @@ return {
       {
         "<leader>xn",
         function()
-          if Snacks.config.picker and Snacks.config.picker.enabled then
-            Snacks.picker.notifications()
-          else
             Snacks.notifier.show_history()
-          end
         end,
         desc = "Notification History"
       },

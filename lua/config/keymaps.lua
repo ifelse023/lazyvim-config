@@ -243,7 +243,6 @@ if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<leader>uh")
 end
 
-map("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
 map({ "n", "x" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
 map({"n", "x" }, "<leader>gY", function()
   Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
@@ -335,3 +334,9 @@ local function yank_line_diagnostics()
 end
 
 nmap("<leader>xy", yank_line_diagnostics, { desc = "Yank line diagnostics to clipboard" })
+
+
+
+
+vim.keymap.set("n", "q", "<Nop>")
+vim.keymap.set("n", "Q", "<Nop>")

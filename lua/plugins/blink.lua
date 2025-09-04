@@ -30,6 +30,7 @@ return {
         nerd_font_variant = "mono",
       },
       completion = {
+
         accept = {
           -- experimental auto-brackets support
           auto_brackets = {
@@ -37,6 +38,7 @@ return {
           },
         },
         menu = {
+          auto_show = false,
           draw = {
             treesitter = { "lsp" },
           },
