@@ -3,7 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
-    event = { "LazyFile", "VeryLazy" },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
@@ -86,8 +86,6 @@ return {
     event = "VeryLazy",
     enabled = true,
     config = function()
-      -- Textobjects configuration is now handled in the main treesitter config above
-
       -- When in diff mode, we want to use the default
       -- vim text objects c & C instead of the treesitter ones.
       local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
@@ -110,21 +108,24 @@ return {
       end
     end,
   },
-  "nvim-treesitter/nvim-treesitter-context",
-  event = "LazyFile",
-  opts = function()
-    local tsc = require("treesitter-context")
-    Snacks.toggle({
-      name = "Treesitter Context",
-      get = tsc.enabled,
-      set = function(state)
-        if state then
-          tsc.enable()
-        else
-          tsc.disable()
-        end
-      end,
-    }):map("<leader>ut")
-    return { mode = "cursor", max_lines = 3 }
-  end,
+
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    opts = function()
+      local tsc = require("treesitter-context")
+      Snacks.toggle({
+        name = "Treesitter Context",
+        get = tsc.enabled,
+        set = function(state)
+          if state then
+            tsc.enable()
+          else
+            tsc.disable()
+          end
+        end,
+      }):map("<leader>ut")
+      return { mode = "cursor", max_lines = 3 }
+    end,
+  },
 }

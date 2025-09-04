@@ -6,7 +6,6 @@ local LazyUtil = require("lazy.core.util")
 ---@field root lazyvim.util.root
 ---@field terminal lazyvim.util.terminal
 ---@field format lazyvim.util.format
----@field plugin lazyvim.util.plugin
 ---@field inject lazyvim.util.inject
 ---@field lualine lazyvim.util.lualine
 ---@field mini lazyvim.util.mini
@@ -14,7 +13,6 @@ local LazyUtil = require("lazy.core.util")
 ---@field cmp lazyvim.util.cmp
 local M = {}
 
-M.deprecated = require("lazyvim.util.deprecated")
 
 setmetatable(M, {
   __index = function(t, k)

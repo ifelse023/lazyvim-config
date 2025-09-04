@@ -28,6 +28,8 @@ return {
         -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
+        -- add icons
+        kind_icons = LazyVim.config.icons.kinds,
       },
       completion = {
 
@@ -70,12 +72,4 @@ return {
     },
   },
 
-  -- add icons
-  {
-    "saghen/blink.cmp",
-    opts = function(_, opts)
-      opts.appearance = opts.appearance or {}
-      opts.appearance.kind_icons = vim.tbl_extend("force", opts.appearance.kind_icons or {}, LazyVim.config.icons.kinds)
-    end,
-  },
 }

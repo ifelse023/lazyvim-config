@@ -1,6 +1,7 @@
 return {
   {
     "miikanissi/modus-themes.nvim",
+    priority = 1000,
     opts = {
       style = "auto",
       variant = "default",
@@ -13,6 +14,10 @@ return {
         hl["@keyword.import.c"] = { fg = "#ffbd5e" }
       end,
     },
+    config = function(_, opts)
+      require("modus-themes").setup(opts)
+      vim.cmd.colorscheme("modus")
+    end,
   },
   {
     "scottmckendry/cyberdream.nvim",

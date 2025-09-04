@@ -1,7 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    event = "LazyFile",
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     opts = function()
       local ret = {
         diagnostics = {

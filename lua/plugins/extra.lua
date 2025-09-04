@@ -4,7 +4,69 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    opts = {},
+    opts = {
+      bigfile = { enabled = true },
+      quickfile = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      image = { enabled = false },
+      notifier = { enabled = true },
+      scope = { enabled = true },
+      statuscolumn = { enabled = false }, -- we set this in options.lua
+      toggle = { map = vim.keymap.set },
+      words = { enabled = true },
+      dashboard = {
+        preset = {
+          pick = function(cmd, opts)
+            return LazyVim.pick(cmd, opts)()
+          end,
+          header = [[
+    ⠟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠿⣿⣿⣿⣿
+    ⣿⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿
+    ⣿⣿⣿⣿⣿⣷⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣢⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿
+    ⣿⣿⡿⠿⠛⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠠⢐⣴⣾⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒
+    ⣿⣥⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⠖⣠⣴⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⣿⣿⣿⣿⣧⣤⣀⠀⠀⠀⠀⠀⠀⣠⡿⢟⣣⣿⣿⣿⣿⣿⡿⠛⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠
+    ⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⡀⢀⣠⣴⣾⣿⣿⣿⣿⣿⠟⠉⠀⠀⠀⣠⢂⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠋
+    ⣿⣿⣿⣿⣿⣿⣿⡿⢛⣩⣴⣿⣿⣿⣿⣿⣿⠟⠋⠀⠀⠀⠀⠀⣴⡏⣾⡇⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀
+    ⣿⣿⣿⣿⣿⢟⡡⣸⣿⣿⡛⠿⢿⣿⡿⢋⣅⠀⣀⣀⡀⠀⠀⠸⣿⢸⣿⡇⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⡿⠿⠿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⣿⣿⣿⡿⢡⣎⣼⣿⣿⣿⢿⣿⣶⣦⣬⣛⡱⢿⣿⣿⠃⢧⣰⡀⠈⢿⣿⣇⠀⠀⠀⢀⠤⠞⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠖⠀⠀⠀⠀⠀
+    ⣿⣿⡿⣡⣿⣿⢛⣿⣿⣿⣷⣮⣍⡛⠿⣿⣿⣶⡍⣁⢾⠸⣿⣇⠀⢀⣹⣿⡄⠀⢀⣀⢠⣤⣶⣶⠂⠀⠀⢠⣤⡆⠀⠀⢀⠀⠀⠀⠀⠀⠀⢀⣀⣄⡀⠀⣠⣾⠏⠀⠀⠀⠀⠀⠀
+    ⣿⢟⣴⣿⣿⣵⣿⣿⣿⣿⣿⣿⣿⣿⣷⣮⡻⣿⢃⣿⠘⠷⠍⣛⢿⣿⣿⣿⣷⣷⣿⣷⢸⣿⣿⣿⣷⣤⣴⣿⣿⣶⣿⣟⣁⣠⣤⠄⠆⣡⣾⠟⠛⠛⠻⣆⠟⠁⠀⠀⠀⠀⠀⠀⠀
+    ⣵⣿⣿⣿⣿⣿⣿⣿⣧⣛⠿⠿⣿⠿⠿⣿⠃⠏⣼⣿⠁⣷⣦⣤⣉⠻⢏⣿⣿⣿⠿⠿⠦⠍⠬⠭⠭⠝⠿⠿⣿⣿⣿⣿⣿⣿⣿⣶⣾⠟⠁⠀⢀⣴⣶⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⣿⣿⣿⣿⣿⡿⠛⣛⡛⣫⣾⣄⡲⣾⡿⣁⢈⣾⣿⣿⡆⢻⣿⣿⠟⣣⣾⣿⣿⣿⣾⣿⣶⣶⣶⣶⣴⣦⣤⣤⣬⣽⣿⣿⣿⣿⣿⣿⣿⠄⠀⠐⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⣿⣿⣿⣿⣿⣿⣿⣏⢼⡿⠿⢛⣛⣫⣼⡏⣼⣿⣿⣿⣯⢸⣿⣧⣘⡛⠛⢛⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢁⣀⢠⣼⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⣿⣿⣿⣿⣿⣿⣿⡟⣠⣶⣿⣿⣿⣿⡟⣰⣿⣿⣿⣿⣿⣆⢻⣿⣿⣿⡟⢿⣿⣿⣿⣿⡿⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣥⣶⣶⣶⣿⠿⣋⣥⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⣿⣿⣿⣿⣿⣿⢟⣴⣿⣿⣿⣿⣿⢏⣼⣿⣿⣿⣿⣿⣿⣿⣦⡻⣿⣿⣿⣷⡶⢶⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⣱⣮⡍⣛⣛⣭⣶⣾⣿⣿⣿⣿⣦⢀⣤⣤⣤⣶⣶⣶⣶
+    ⡿⢿⡿⠿⠛⣵⣾⣿⣿⣿⠿⣋⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡙⣿⣿⣿⣷⣤⣤⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢏⣼⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠹⢿⣿⣿⣿⣿⣿
+    ⣿⣿⢟⣻⣷⣬⡭⣉⣭⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣌⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⣡⣾⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢲⣭⣙⠿⣿⣿
+    ⣯⣵⣿⠿⠟⢡⣾⠟⠛⠿⠿⠛⢛⢋⣉⣉⣉⣉⣉⠛⡛⠛⠿⢿⡿⠛⣀⠙⢿⣿⣿⣿⣿⠿⠿⠟⠛⠉⢁⣤⣾⣿⣿⣿⡏⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣹⣿⣿⣦⣉
+    ⠀⠀⠀⠀⠀⣼⠁⠀⠙⢦⡙⣎⡓⣎⠶⣑⢎⠖⣥⠛⡼⢩⠖⢀⢤⠣⠁⢀⡴⠀⠀⢀⡀⠀⠄⢂⣤⣾⣿⣿⣿⣿⣿⣿⢣⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⢹⢰⡍⣶⢩⡞⡌⠉⣶⢹⡌⡅⢢⠋⣦⠁⢠⡎⠀⠀⣴⣿⡇⢲⠘⣿⣿⣿⣿⣿⣿⣿⣿⡏⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⠖⣣⠹⣤⢋⠔⢠⡹⢤⢣⡝⡸⢀⠏⠄⣀⡒⠀⠠⣶⡜⢿⣿⢸⠳⢹⣿⣿⣿⣿⣿⣿⣿⢃⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟
+    ⣠⣦⠀⠀⠀⠀⠀⠀⠀⠀⡹⣐⠯⣐⠂⡐⢦⢓⡣⢇⡎⢁⡜⠊⡰⠂⠀⢠⣷⣶⣭⣘⡻⣾⣇⢻⣿⣿⣿⣿⣿⣿⡏⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⣟⣿⣿⡿⢋⡕⣚
+    ⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠰⡑⢎⠀⡠⡜⣣⢍⡞⣡⠊⡔⠌⡰⠁⠀⠀⢸⣿⣿⣿⣿⣿⣦⡙⠘⣿⣿⣿⣿⣿⡟⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣋⣵⣶⣿⣿⣿⠟⡡⢲⡍⡞⢥
+    ⣷⣮⣅⠀⠀⠀⠀⠀⠀⠀⠐⡹⠀⢠⢣⡕⣣⠞⣰⠃⢰⠸⡑⠂⠀⠀⠀⠀⠛⢿⣿⣿⣿⣿⣿⣦⣻⣿⣿⡿⢟⣘⣩⣭⣭⣭⣥⣭⣭⣭⣭⣥⣬⣭⣝⣛⠟⠋⣡⢎⡵⢣⢞⡸⠁
+    ⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠁⢀⡳⣊⠶⣑⢮⡑⠀⣇⠳⠈⠀⠀⠀⠀⠀⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣵⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠉⠀⢠⡚⣥⢚⣌⠳⡊⠀⠔
+    ⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⣎⡱⢎⡵⢩⢦⠁⢸⠰⡉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠉⠁⠀⠀⢠⣘⢣⡕⢎⡵⢊⠁⡄⢁⡎
+    ⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⡜⣰⠣⣍⠶⣩⠆⠀⣣⢓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠋⠉⠀⠀⠀⠀⠀⠀⢀⡰⢃⢮⡱⢎⠳⠌⣀⠃⢤⠳⣘
+    ⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⢄⡳⣡⢛⡴⡹⠄⠠⠐⣥⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⢆⡳⣍⠶⣑⠋⢀⡒⢀⡜⣎⠵⣩
+]],
+          -- stylua: ignore
+          ---@type snacks.dashboard.Item[]
+          keys = {
+            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
+        },
+      },
+    },
     config = function(_, opts)
       local notify = vim.notify
       require("snacks").setup(opts)
@@ -14,6 +76,20 @@ return {
         vim.notify = notify
       end
     end,
+    -- stylua: ignore
+    keys = {
+      { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      { "<leader>dps", function() Snacks.profiler.scratch() end, desc = "Profiler Scratch Buffer" },
+      {
+        "<leader>xn",
+        function()
+            Snacks.notifier.show_history()
+        end,
+        desc = "Notification History"
+      },
+      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+    },
   },
   -- comments
   {
@@ -24,7 +100,7 @@ return {
   {
     "folke/todo-comments.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
-    event = "LazyFile",
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     opts = {},
     -- stylua: ignore
     keys = {

@@ -1,11 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.diagnostic.config({
-  jump = {
-    on_jump = vim.diagnostic.open_float,
-  },
-})
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 vim.g.root_lsp_ignore = { "copilot" }
@@ -30,7 +25,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 _G.LazyVim = require("lazyvim.util")
 
-LazyVim.plugin.setup()
 require("lazy").setup({
   spec = {
     { import = "plugins.which-key" },
@@ -66,4 +60,3 @@ require("lazy").setup({
   },
 })
 require("config").setup()
-vim.cmd.colorscheme("modus")
