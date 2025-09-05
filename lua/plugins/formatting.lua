@@ -33,6 +33,8 @@ return {
       },
     },
     init = function()
+      -- Enable autoformat globally
+      vim.g.autoformat = true
       -- Install the conform formatter on VeryLazy
       LazyVim.on_very_lazy(function()
         LazyVim.format.register({
@@ -74,6 +76,7 @@ return {
           fish = { "fish_indent" },
           sh = { "shfmt" },
           kdl = { "kdlfmt" },
+          markdown = { "mdformat" },
         },
         -- The options you set here will be merged with the builtin formatters.
         -- You can also define any custom formatters here.

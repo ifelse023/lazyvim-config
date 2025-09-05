@@ -120,7 +120,7 @@ return {
         },
         files = {
           cwd_prompt = false,
-          fd_opts = [[--type f --hidden --strip-cwd-prefix --exclude .git --exclude .jj]],
+          fd_opts = [[--type f --strip-cwd-prefix --exclude .git --exclude .jj]],
           actions = {
             ["alt-i"] = { actions.toggle_ignore },
             ["alt-h"] = { actions.toggle_hidden },
