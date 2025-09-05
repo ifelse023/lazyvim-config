@@ -266,13 +266,10 @@ nmap("<Tab>", "<C-w>w", "Next window")
 nmap("<S-Tab>", "<Cmd>b#<CR>", "Alternate buffer")
 nmap("<leader><Tab>", "<Cmd>FzfLua buffers<CR>", "Buffers")
 
-
 -- Disable built-in mark functionality for 'm' to allow which-key to show surround options
 map("n", "m", "<nop>", { desc = "Disabled to allow mini.surround M prefix" })
 
-map({ 'n', 'v', 'x' }, 'mm', '%', { noremap = true, silent = true })
-
-
+map({ "n", "v", "x" }, "mm", "%", { noremap = true, silent = true })
 
 local function yank_line_diagnostics()
   local bufnr = vim.api.nvim_get_current_buf()
@@ -293,10 +290,11 @@ end
 
 nmap("<leader>xy", yank_line_diagnostics, { desc = "Yank line diagnostics to clipboard" })
 
-
-vim.keymap.set('n', '<space><space>f', function()
-  vim.fn.system('zellij run -n Yazi -c -f -x 3% -y 3% --width 94% --height 94% -- bash ~/.config/nvim/yazi-picker.sh e ' .. vim.fn.expand('%'))
-
+vim.keymap.set("n", "<space><space>f", function()
+  vim.fn.system(
+    "zellij run -n Yazi -c -f -x 3% -y 3% --width 94% --height 94% -- bash ~/.config/nvim/yazi-picker.sh e "
+      .. vim.fn.expand("%")
+  )
 end)
 
 vim.keymap.set("n", "q", "<Nop>")
